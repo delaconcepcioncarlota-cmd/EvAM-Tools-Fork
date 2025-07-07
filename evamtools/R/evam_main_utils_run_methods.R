@@ -244,13 +244,13 @@ run_HyperTraPS <- function(x, opts) {
   message("HyperTraPS times: time_out = ",  round(time_out, 3),
           ". time2 = ", round(time2, 3))
 
-  return(list(time_out = time_out, + time2,
+    return(list(time_out = time_out + time2,
                 out = c(primary_output = list(out),
                         trans_mat = list(trans_mat)
-                    , predicted_genotype_freqs = list(tmp$predicted_genotype_freqs)
-                    , conditional_genotype_freqs = list(tmp$conditional_genotype_freqs)
-                    , used_prob.set = list(num_prob.set)
-                      ## , Prob_Cond_Prob_df = list(tmp$HyperTraps_Prob_Cond_Prob)
+                      , predicted_genotype_freqs = list(tmp$predicted_genotype_freqs)
+                      , conditional_genotype_freqs = list(tmp$conditional_genotype_freqs)
+                      , used_prob.set = list(num_prob.set)
+                        ## , Prob_Cond_Prob_df = list(tmp$HyperTraps_Prob_Cond_Prob)
                         )))
 }
 
