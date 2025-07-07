@@ -188,11 +188,12 @@ run_HyperTraPS <- function(x, opts) {
                            num_features = num_features,
                            feature_labels = feature_labels)
 
-    state_mapping <- data.frame(
-        State = states,
-        Features = decoded_states,
-        stringsAsFactors = FALSE
-    )
+    ## What is this for? FIXME: rm?
+    ## state_mapping <- data.frame(
+    ##     State = states,
+    ##     Features = decoded_states,
+    ##     stringsAsFactors = FALSE
+    ## )
 
   ## Create a transition matrix (initialized as zeros)
   trans_mat <- Matrix(0,
