@@ -79,7 +79,7 @@ What can EvAM-Tools be used for?
 
 The web app in particular should allow for easy exploration of EvAM models without the need for installing any software. Details about the use of the web app are provided in https://www.iib.uam.es/evamtools/#input. The following figure provides an overview of the workflow with the web app:
 
-![Overview EvAM-Tools web app](./evamtools/inst/shiny-examples/evamtools/assets/figure-overview.png?raw=true)
+![Overview EvAM-Tools web app](./evamtools/inst/shiny-examples/evamtools/assets/figure-overview-2.png?raw=true)
 
 As can be seen, the web app workflows encompass different major functionalities and use cases, mainly:
 
