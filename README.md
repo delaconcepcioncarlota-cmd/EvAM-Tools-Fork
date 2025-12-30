@@ -220,7 +220,7 @@ You can also build your own Docker image and you might want to run the Shiny app
   
   * Install HyperHMM
     - HyperHMM is available from https://github.com/StochasticBiology/hypercube-hmm.git . <!-- We are using the bioconductor branch. Recall the HyperHMM repo used the bioconductor branch -->
-	  - This is what we do: start R, install the remotes package if you don't have it, and then issue `remotes::install_github("StochasticBiology/HyperHMM", ref = "bioconductor")`
+	- This is what we do: start R, install the remotes package if you don't have it, and then issue `remotes::install_github("StochasticBiology/HyperHMM", ref = "bioconductor")`
   
 
   *	Install BML
