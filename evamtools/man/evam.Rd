@@ -322,7 +322,7 @@ probability of numbers of mutations observed in the sample. You can
         \code{transitions} (Probability) output of the call to 
         \code{\link[hyperhmm:HyperHMM]{HyperHMM}}.} 
   
-  \item{HyperHMM_flux_mat}{Flux matrix. Obtained from the 
+  \item{HyperHMM_trans_rate_mat}{Rate matrix. Obtained from the 
         \code{transitions} (Flux) output of the call to 
         \code{\link[hyperhmm:HyperHMM]{HyperHMM}}.} 
 
