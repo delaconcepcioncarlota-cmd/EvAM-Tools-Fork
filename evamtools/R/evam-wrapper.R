@@ -1024,7 +1024,7 @@ evam_old <- function(x,
             cbn_opts = cbn_opts_2,
             hesbcn_opts = hesbcn_opts_2,
             oncobn_opts = oncobn_opts_2,
-            mccbn_opts = mccbn_opts_2
+            mccbn_opts = mccbn_opts_2,
             hyperhmm_opts = hyperhmm_opts_2)
     )
 
