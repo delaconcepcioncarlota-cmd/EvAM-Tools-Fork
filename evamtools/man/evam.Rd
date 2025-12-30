@@ -293,9 +293,7 @@ probability of numbers of mutations observed in the sample. You can
         \item{HESBCN_elapsed_time}{As for OT.}
 
 	\item{HyperTraPS_elapsed_time}{As for other methods.}
-	\item{HyperTraPS_trans_mat}{Transition matrix. Obtained from the
-	\code{dynamics$trans} output of the call to
-	\code{\link[hypertrapsct:HyperTraPS]{HyperTraPS}}. This is just
+	This is just
 	a renaming and restructuring of that output, which are the
 	"Probabilities for individual transitions", from \url{https://github.com/StochasticBiology/hypertraps-ct/tree/bioconductor#output}.}
 	\item{HyperTraPS_primary_output}{All the ouput, as provided by the
@@ -482,7 +480,7 @@ Executes all CPMS given a cross sectional data set.
 -  Weinreich, D. M., & Chao, L. (2005). Rapid evolutionary escape by large populations from local fitness peaks is likely in nature. Evolution, 59(6),   1175–1182. \url{http://dx.doi.org/10.1111/j.0014-3820.2005.tb01769.x}
 
 }
-
+ 
 \seealso{
    \code{\link{sample_evam}},
    \code{\link{plot_evam}}
