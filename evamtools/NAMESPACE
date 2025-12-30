@@ -14,6 +14,11 @@ export(
  , "plot_HyperTraPS_evam_influences"
  , "plot_HyperTraPS_evam_influencegraph"
  , "probs_from_HyperTraPS_discrete"
+ , "plot_HyperHMM_bubbles"
+ , "plot_HyperHMM_pfg"
+ , "plot_HyperHMM_hypercube"
+ , "plot_HyperHMM_standard"
+ , "plot_HyperHMM_hypercube_flux"
    )
 
 ## FIXME: try to bring down deps
@@ -90,6 +95,8 @@ importFrom("hypertrapsct", "HyperTraPS",
            "plotHypercube.influences",
            "plotHypercube.bubbles",
            "state.probs")
+
+importFrom("hyperhmm", "HyperHMM")
 
 importFrom("utils", "combn")
 
