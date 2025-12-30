@@ -83,6 +83,13 @@ evam(x,
        threshold = 0.3,
        rep = 10
      ),
+     hyper_hmm_opts = list(
+       initialstates = NULL,
+       seed = 1L,
+       nboot = 100L,
+       fullsample = 1L,
+       outputinput = 0L
+      ), 
      only_used_methods = TRUE
      )
 }
@@ -90,11 +97,12 @@ evam(x,
 
   \item{x}{cross sectional data}
 
-  \item{methods}{Methods to use. A vector with one or more of the
-    following strings, \dQuote{OT}, \dQuote{OncoBN}, \dQuote{CBN},
-    \dQuote{MCCBN}, \dQuote{MHN}, \dQuote{HESBCN}, \dQuote{HyperTraPS},
-    \dQuote{BML} (if you type \dQuote{HyperTraps} or \dQuote{hypertraps}
-    it will be turned into \dQuote{HyperTraPS}).}
+  \item{methods}{Methods to use. A vector with one or more of the 
+    following strings, \dQuote{OT}, \dQuote{OncoBN}, \dQuote{CBN}, 
+    \dQuote{MCCBN}, \dQuote{MHN}, \dQuote{HESBCN}, \dQuote{HyperTraPS}, 
+    \dQuote{BML} \dQuote{HyperHMM} (if you type \dQuote{HyperTraps} or \dQuote{hypertraps} 
+    it will be turned into \dQuote{HyperTraPS}) (if you type \dQuote{hyperhmm} or \dQuote{Hyperhmm} 
+    it will be turned into \dQuote{HyperHMM}).} }
 
 
   \item{max_cols}{Maximum number of columns to use in the analysis. If x has > max_cols, selected columns are those with the largest number of events.}
@@ -216,6 +224,9 @@ probability of numbers of mutations observed in the sample. You can
   manuscript are not possible. The value used in the original paper was 1000.}
     }
   }
+\item{hyperhmm_opts}{A named list with arguments passed to 
+ HyperHMM. See the help for \code{\link[hyperhmm:HyperHMM]{HyperHMM}} and 
+ \url{https://github.com/StochasticBiology/hypercube-hmm#Inference} 
 
 \item{only_used_methods}{If TRUE, do not return list components that
   contain only an NA (for example, the list components for not-used methods). }
@@ -309,7 +320,30 @@ probability of numbers of mutations observed in the sample. You can
 	\item{BML_primary_output}{All the ouput, as provided by the
 	  \code{\link[BML]{bml}} function. See there for details.}
 
-	\item{methods}{The methods argument to the function: methods
+  \item{HyperHMM_trans_mat}{Transition matrix. Obtained from the 
+        \code{transitions} (Probability) output of the call to 
+        \code{\link[hyperhmm:HyperHMM]{HyperHMM}}.} 
+  
+  \item{HyperHMM_flux_mat}{Flux matrix. Obtained from the 
+        \code{transitions} (Flux) output of the call to 
+        \code{\link[hyperhmm:HyperHMM]{HyperHMM}}.} 
+
+  \item{HyperHMM_edges}{Relationship between states, with components: from (source state), to (target state), probability (transition probability from ‘from’ to ‘to’), relation (type of relation between states), and edges (list of edges representing the connections).} 
+
+  \item{HyperHMM_all_paths}{All inferred paths between states for visualization.} 
+
+  \item{HyperHMM_predicted_genotype_freqs}{As for OT.} 
+
+  \item{HyperHMM_flux_genotype_freqs}{Flux of genotypes from the HyperHMM model, as a data frame.} 
+
+  \item{HyperHMM_n_features}{Number of features ($N) and their names ($names_features).} 
+  \item{HyperHMM_stats}{Feature-level statistics including feature ID ($feature), order ($order), mean ($mean), and standard deviation ($sd).} 
+
+  \item{HyperHMM_elapsed_time}{As for OT.} 
+
+  \item{HyperHMM_primary_output}{Raw output of the call to \code{\link[hyperhmm:HyperHMM]{HyperHMM}}.} 
+ 
+  \item{methods}{The methods argument to the function: methods
         actually used in the run.}
         \item{original_data}{The original data.}
         \item{analyzed_data}{The data that were actually analyzed. Can
@@ -480,6 +514,11 @@ Executes all CPMS given a cross sectional data set.
 \bold{Reference in details}
 
 -  Weinreich, D. M., & Chao, L. (2005). Rapid evolutionary escape by large populations from local fitness peaks is likely in nature. Evolution, 59(6),   1175–1182. \url{http://dx.doi.org/10.1111/j.0014-3820.2005.tb01769.x}
+
+\bold{HyperHMM} 
+
+- Moen, M. T., & Johnston, I. G. (2022). Efficient inference of evolutionary and progressive dynamics on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. 
+\url https://doi.org/10.1101/2022.05.09.491130 
 
 }
 
