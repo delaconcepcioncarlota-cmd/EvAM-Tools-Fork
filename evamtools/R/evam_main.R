@@ -138,7 +138,18 @@ evam <- function(x,
     methods <- gsub("Hypertraps", "HyperTraPS", methods, fixed = TRUE)
     methods <- gsub("hypertraps", "HyperTraPS", methods, fixed = TRUE)
 
-
+    methods <- gsub("hyperhmm", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("Hyperhmm", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("hyperHmm", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("hyperhMm", "HyperHMM",methods, fixed=TRUE)    
+    methods <- gsub("hyperhmM", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("HyperHmm", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("HyperHMm", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("HyperhMm", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("HyperhMM", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("HyperHmM", "HyperHMM",methods, fixed=TRUE)
+    methods <- gsub("hyperHMM", "HyperHMM",methods, fixed=TRUE)
+    
     ## zz:default_opts
     ## FIXME: this logic is confusing!
     ## See also evam_opts_default_params.R, line 23
