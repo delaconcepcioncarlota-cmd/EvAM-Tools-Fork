@@ -459,7 +459,7 @@ cpm2tm <- function(x,
                          "OT_edgeWeight", ## OT
                          "Lambdas", ## HESBCN
                          "theta" ## OncoBN
-                         )) {
+                         )) { 
     if(inherits(x, "try-error") || all(is.na(x)) || is.null(x)) {
         return(list(
             fgraph = "ERROR_CPM_ANALYSIS",
@@ -489,6 +489,7 @@ cpm2tm <- function(x,
     if(exists("parent_set", x) && !(exists("Relation", x$edges)))
         stop("x has parent_set but no Relation. Old format?")
 
+    ##-->>> Hay que revisar que tipo de relación lógica tiene HyperHMM
     ## OT, CBN, and OncoBN if using CBN, HESBCN only Single and AND
     if (!exists("Relation", x$edges) ||
        isTRUE(all(x$edges$Relation %in% c("AND", "Single")))) {
@@ -606,7 +607,7 @@ transition_fg_sparseM <- function(x, weights) {
 
 ## Main function. data frame or matrix -> output
 evam_old <- function(x,
-                 methods = c("CBN", "OT", "HESBCN", "MHN", "OncoBN", "MCCBN"),
+                 methods = c("CBN", "OT", "HESBCN", "MHN", "OncoBN", "MCCBN", "HyperHMM"), ##Added HyperHMM
                  max_cols = 15,
                  cores = detectCores(),
                  paths_max = FALSE,
@@ -651,9 +652,17 @@ evam_old <- function(x,
                      adaptive = TRUE,
                      thrds = 1L,
                      verbose = FALSE,
-                     seed = NULL),
-                 only_used_methods = TRUE
-                 ) {
+                     seed = NULL
+                 ),
+                 hyperhmm_opts = list( ##ADDED. Modify in order to hyperhmm opts
+                    initialstates = NULL, #matriz opcional de estados iniciales
+                    seed = 1L, #semilla en caso de querer reproducibilidad
+                    nboot = 100L, #número de bootstrap 
+                    fullsample = 1L, #Indica si cada bootstrap usa todas las observaciones (1L --> usa todas las observaciones)
+                    outputinput = 0L #Devolver también la matriz obs (datos de entrada) (0L --> NO los devuelve como output)
+                 ),
+                 only_used_methods = TRUE)
+                 {
 
     ## Sanity check of gene names
     gn_comma <- stringi::stri_count_fixed(colnames(x), ",")
@@ -674,7 +683,7 @@ evam_old <- function(x,
     
     ## Sanity checks of methods
     methods <- unique(methods)
-    accepted_methods <- c("OT", "OncoBN", "CBN", "MCCBN", "MHN", "HESBCN")
+    accepted_methods <- c("OT", "OncoBN", "CBN", "MCCBN", "MHN", "HESBCN", "HyperHMM") ##Added HyperHMM
     not_valid_methods <- which(!(methods %in% accepted_methods))
     if (length(not_valid_methods)) {
         warning("Method(s) ",
@@ -767,7 +776,16 @@ evam_old <- function(x,
         adaptive = TRUE,
         thrds = 1L,
         verbose = FALSE,
-        seed = NULL)
+        seed = NULL
+    )
+    d_hyperhmm_opts <- list(
+        initialstates = NULL, #matriz opcional de estados iniciales
+        seed = 1L, #semilla en caso de querer reproducibilidad
+        nboot = 100L, #número de bootstrap 
+        fullsample = 1L, #Indica si cada bootstrap usa todas las observaciones (1L --> usa todas las observaciones)
+        outputinput = 0L #Devolver también la matriz obs (datos de entrada) (0L --> NO los devuelve como output)
+    )
+    
 
     ## Not needed, but make sure we keep names distinct
     mhn_opts_2 <- fill_args_default(mhn_opts, d_mhn_opts)
@@ -775,10 +793,13 @@ evam_old <- function(x,
     hesbcn_opts_2 <- fill_args_default(hesbcn_opts, d_hesbcn_opts)
     oncobn_opts_2 <- fill_args_default(oncobn_opts, d_oncobn_opts)
     mccbn_opts_2 <- fill_args_default(mccbn_opts, d_mccbn_opts)
+    hyperhmm_opts_2 <- fill_args_default(hyper_opts, d_hyperhmm_opts) #added HyperHMM
 
     ## rm to avoid confusion, though not needed
-    rm(cbn_opts, hesbcn_opts, oncobn_opts, mccbn_opts, mhn_opts)
-    rm(d_cbn_opts, d_hesbcn_opts, d_oncobn_opts, d_mccbn_opts, d_mhn_opts)
+    rm(cbn_opts, hesbcn_opts, oncobn_opts, mccbn_opts, mhn_opts, hyperhmm_opts)
+    rm(d_cbn_opts, d_hesbcn_opts, d_oncobn_opts, d_mccbn_opts, d_mhn_opts, d_hyperhmm_opts)
+    
+    
 
     if (!(cbn_opts_2$init_poset %in% c("OT", "linear", "ct-cbn")))
         stop("CBN's init_poset must be one of OT or linear or ct-cbn. ")
@@ -980,6 +1001,18 @@ evam_old <- function(x,
         HESBCN_paths_max = get_paths_max("HESBCN"),
         HESBCN_elapsed_time = get_output("HESBCN", "elapsed_time"),
 
+        HyperHMM_trans_mat=get_output("HyperHMM", "trans_mat"),
+        HyperHMM_flux_mat=get_output("HyperHMM", "trans_flux_mat"),
+        HyperHMM_edges=get_output("HyperHMM", "edges"),
+        HyperHMM_all_genotypes=get_output("HyperHMM", "all_genotypes"),
+        HyperHMM_paths_all=get_output("HyperHMM", "paths_all"),
+        HyperHMM_predicted_genotype_freqs=get_output("HyperHMM", "predicted_genotype_freqs"),
+        HyperHMM_conditional_genotype_freqs=get_output("HyperHMM", "conditional_genotype_freqs"),
+        HyperHMM_n_features=get_output("HyperHMM", "n_features"),
+        HyperHMM_stats=get_output("HyperHMM", "stats"),
+        HyperHMM_raw_output=get_output("HyperHMM", "raw_output"),
+        HyperHMM_elapsed_time=get_output("HyperHMM", "elapsed_time"),
+
         original_data = xoriginal,
         analyzed_data = x,
         genotype_id_ordered =
@@ -991,7 +1024,8 @@ evam_old <- function(x,
             cbn_opts = cbn_opts_2,
             hesbcn_opts = hesbcn_opts_2,
             oncobn_opts = oncobn_opts_2,
-            mccbn_opts = mccbn_opts_2)
+            mccbn_opts = mccbn_opts_2
+            hyperhmm_opts = hyperhmm_opts_2)
     )
 
     if (only_used_methods) {
