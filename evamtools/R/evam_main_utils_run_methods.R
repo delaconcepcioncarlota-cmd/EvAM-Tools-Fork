@@ -366,7 +366,7 @@ run_HyperHMM <- function (x, opts){
             conditional_genotype_freqs = out$conditional_freqs,
             all_paths = out$paths_all,
             stats = out$stats,
-            n_features = out$n_features
+            n_features = out$n_features,
             raw_output = out$raw_output
 
         )
