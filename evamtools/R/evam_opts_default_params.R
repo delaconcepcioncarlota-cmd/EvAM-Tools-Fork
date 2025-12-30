@@ -116,6 +116,13 @@
 ##           ntree = 100,
 ##           threshold = 0.3,
 ##             rep = 0
-##         )
+##         ),
+##         hyper_hmm_opts = list( 
+##           initialstates = NULL, #matriz opcional de estados iniciales
+##           seed = 1L, #semilla en caso de querer reproducibilidad
+##           nboot = 100L, #número de bootstrap 
+##           fullsample = 1L, #Indica si cada bootstrap usa todas las observaciones (1L --> usa todas las observaciones)
+##           outputinput = 0L #Devolver también la matriz obs (datos de entrada) (0L --> NO los devuelve como output)
+##          )
 ##     )
 ## }
