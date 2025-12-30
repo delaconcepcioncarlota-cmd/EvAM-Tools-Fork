@@ -352,6 +352,35 @@ run_BML <- function(x, opts) {
     return(list(time_out = time_out, out = c(primary_output = list(out))))
 }
 
+
+run_HyperHMM <- function (x, opts){
+    time_out <- system.time({
+        out <- do_HyperHMM(x,opts=opts)
+        out_final <- list(
+            primary_output = out,
+            trans_mat = out$trans_matrix,
+            trans_flux_mat = out$trans_flux_mat,
+            edges = out$edges,
+            all_genotypes = out$all_genotypes,
+            predicted_genotype_freqs = out$predicted_freqs,
+            conditional_genotype_freqs = out$conditional_freqs,
+            all_paths = out$paths_all,
+            stats = out$stats,
+            n_features = out$n_features
+            raw_output = out$raw_output
+
+        )
+    })["elapsed"]
+    return(list(time_out = time_out, out = out_final))
+}
+##Hay por ahí una funcion que tienen todas las anteriores que se llama do_modelo}
+
+##system.time({...})["elapsed"] para medir cuánto tiempo tarda la ejecución en segundos.
+##Casi todas intentan convertir la salida nativa del algoritmo a un formato común, específicamente llamando a funciones como cpm2tm() o probs_from_trm()
+##Return:¡(list(time_out=time_out, out=parametros de salida))
+##Vale, la gema me ha dicho que hay que crear una funcion, buscar si hyperhmm ya la tiene, que pase los datos de $transitions a una matriz de transicion, 
+##en esa variable estan el from(filas) el to(cols) y la probabilidad de from a to.
+
 run_method <- function(method, x, opts) {
     if (method == "MHN") {
         result <- run_MHN(x, opts$mhn_opts)
@@ -369,6 +398,8 @@ run_method <- function(method, x, opts) {
       result <- run_HyperTraPS(x, opts$hyper_traps_opts)
     } else if (method == "BML") {
         result <- run_BML(x, opts$bml_opts)
+    } else if (method == "HyperHMM") {
+        result <- run_HyperHMM(x, opts$hyper_hmm_opts)
     }
 
 
