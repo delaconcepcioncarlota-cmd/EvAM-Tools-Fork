@@ -456,7 +456,7 @@ sample_evam <- function(cpm_output
         methods <- names(which(vapply(c("OT", "OncoBN",
                             "CBN", "MCCBN",
                             "MHN", "HESBCN"
-                          , "HyperTraPS"
+                          , "HyperTraPS", "HyperHMM"
                             ),
                           function(m) {
                               outn <- paste0(m, "_predicted_genotype_freqs")
