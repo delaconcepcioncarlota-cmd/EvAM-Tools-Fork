@@ -34,7 +34,7 @@
 }
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
-fitted = HyperHMM(m, nboot=0)
+fitted = EvamTools(m, model = "HyperHMM")
 plot_HyperHMM_hypercube_flux(fitted)
 }
 
