@@ -35,7 +35,7 @@
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
 fitted = HyperHMM(m, nboot=0)
-plot_hypercube_flux(fitted)
+plot_HyperHMM_hypercube_flux(fitted)
 }
 
 \references{
