@@ -163,7 +163,7 @@ evam <- function(x,
         mccbn_opts = fill_args_default(mccbn_opts, eval(default_opts$mccbn_opts)),
         hyper_traps_opts = fill_args_default(hyper_traps_opts, eval(default_opts$hyper_traps_opts)),
         bml_opts = fill_args_default(bml_opts, eval(default_opts$bml_opts)),
-        hyper_hmm_opts = fils_args_default(hyper_hmm_opts, eval(default_opts$hyper_hmm_opts)) 
+        hyper_hmm_opts = fill_args_default(hyper_hmm_opts, eval(default_opts$hyper_hmm_opts)) 
         #Asegura que todos los métodos tengan sus parámetros completos y con valores por defecto
         #Para hyperhmm no hace falta porque hemos puesto arriba realmente todos los parámetros y no hemos dejado nada en NULL
 
