@@ -29,6 +29,7 @@
   * [H-ESBCN (PMCE)](#h-esbcn-pmce)
   * [OncoBN (DBN)](#oncobn-dbn)
   * [HyperTraPS-CT](#hypertraps-ct)
+  * [HyperHMM](#hyperhmm)
   * [BML](#bml)
   * [Conditional prediction of genotypes and probabilities of paths from CPMs](#conditional-prediction-of-genotypes-and-probabilities-of-paths-from-cpms)
 - [Additional documentation](#additional-documentation)
@@ -216,6 +217,11 @@ You can also build your own Docker image and you might want to run the Shiny app
   *	Install HyperTraPS-CT
     - HyperTraPS-CT is available from https://github.com/StochasticBiology/hypertrapsct . <!-- We are using the bioconductor branch. Recall the hypertraps-ct repo used the bioconductor branch -->
 	- This is what we do: start R, install the remotes package if you don't have it, and then issue `remotes::install_github("StochasticBiology/hypertraps-ct", ref = "bioconductor")`
+  
+  * Install HyperHMM
+    - HyperHMM is available from https://github.com/StochasticBiology/hypercube-hmm.git . <!-- We are using the bioconductor branch. Recall the HyperHMM repo used the bioconductor branch -->
+	  - This is what we do: start R, install the remotes package if you don't have it, and then issue `remotes::install_github("StochasticBiology/HyperHMM", ref = "bioconductor")`
+  
 
   *	Install BML
     - An R wrapper for BML is available from https://github.com/Deschain/BML
@@ -405,7 +411,9 @@ The R package itself with standard organization. Directories and files under ins
   Plos Computational Biology, 20(9), e1012393.
   https://doi.org/10.1371/journal.pcbi.1012393
 
+### HyperHMM ###
 
+- Moen, M. T., & Johnston, I. G. (2022). Efficient inference of evolutionary and progressive dynamics on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. https://doi.org/10.1101/2022.05.09.491130
 
 ### BML ###
 
