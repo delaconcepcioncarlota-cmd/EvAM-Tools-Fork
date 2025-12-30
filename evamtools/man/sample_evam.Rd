@@ -237,7 +237,8 @@ outhmm <- evam(Dat1,
                   nboot = 100L, 
                   fullsample = 1L, 
                   outputinput = 0L))
-outhm_sample <- sample_evam(outhmm, N=1000, methods = "HyperHMM")
+outhmm_S <- sample_evam(outhmm, N=1000, methods = "HyperHMM")
+outhmm_S$HyperHMM_sampled_genotype_counts
 
 
 }
