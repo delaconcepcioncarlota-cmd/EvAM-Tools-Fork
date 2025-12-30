@@ -13,6 +13,10 @@
 ## You should have received a copy of the GNU Affero General Public License along
 ## with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+##COSAS PENDIENTES
+### Parámetros HyperHMM_opts linea 121 o asi
+### Supongo que tambien esto: Dealing with the multiple spellings of HyperTraPS (HyperHMM)
+
 
 
 common_preprocess <- function(x, max_cols) {
@@ -32,7 +36,7 @@ common_preprocess <- function(x, max_cols) {
 
 evam <- function(x,
                  methods = c("CBN", "OT", "HESBCN", "MHN", "OncoBN",
-                             "MCCBN", "HyperTraPS", "BML"),
+                             "MCCBN", "HyperTraPS", "BML", "HyperHMM"),
                  max_cols = 15,
                  cores = detectCores(),
                  paths_max = FALSE,
@@ -115,6 +119,13 @@ evam <- function(x,
                    threshold = 0.3,
                    rep = 10 ## In the paper, 1000. That is way too many for webapp
                  ),
+                 hyper_hmm_opts = list( #PARÁMETROS QUE PIDE LA FUNCION Hyper HMM (INPUT) - valores por defecto
+                  initialstates = NULL, #matriz opcional de estados iniciales
+                  seed = 1L, #semilla en caso de querer reproducibilidad
+                  nboot = 100L, #número de bootstrap 
+                  fullsample = 1L, #Indica si cada bootstrap usa todas las observaciones (1L --> usa todas las observaciones)
+                  outputinput = 0L #Devolver también la matriz obs (datos de entrada) (0L --> NO los devuelve como output)
+                 ),
                  only_used_methods = TRUE
                  ) {
     message("I am the evam function, running with cores = ", cores)
@@ -151,7 +162,11 @@ evam <- function(x,
         oncobn_opts = fill_args_default(oncobn_opts, eval(default_opts$oncobn_opts)),
         mccbn_opts = fill_args_default(mccbn_opts, eval(default_opts$mccbn_opts)),
         hyper_traps_opts = fill_args_default(hyper_traps_opts, eval(default_opts$hyper_traps_opts)),
-        bml_opts = fill_args_default(bml_opts, eval(default_opts$bml_opts))
+        bml_opts = fill_args_default(bml_opts, eval(default_opts$bml_opts)),
+        hyper_hmm_opts = fils_args_default(hyper_hmm_opts, eval(default_opts$hyper_hmm_opts)) 
+        #Asegura que todos los métodos tengan sus parámetros completos y con valores por defecto
+        #Para hyperhmm no hace falta porque hemos puesto arriba realmente todos los parámetros y no hemos dejado nada en NULL
+
     )
 
 
@@ -184,6 +199,19 @@ evam <- function(x,
             opts$hyper_traps_opts$featurenames <- colnames(x)
         }
     }
+    if ("HyperHMM" %in% methods) {
+        HYPERHMM_INSTALLED <- requireNamespace("hyperhmm", quietly = TRUE)
+
+        if (!HYPERHMM_INSTALLED) {
+            warning("HyperHMM method requested, but hyperhmm package not installed. ",
+                    "Removing HyperHMM from list of requested methods.",
+                    "Please install it with: devtools::install_github('StochasticBiology/hypertraps-ct', ref = 'bioconductor')")
+        } 
+                #devtools::install_github("StochasticBiology/hypertraps-ct", ref = "bioconductor")")
+            methods <- setdiff(methods, "HyperHMM")
+        } #aquí en un else se pueden meter comprobaciones de valores pasados a la función (initialstates...)
+        #Pero no sé hasta qué punto comprobar algo si hemos puesto los valores default
+
 
   ## Sanity check of gene names
     sanity_check_colnames(colnames(x), TRUE)
@@ -196,7 +224,10 @@ evam <- function(x,
 
     all_out <- mclapply(methods, run_method, x=x, opts=opts, mc.cores = cores)
     names(all_out) <- methods
-
+    #Devuelve NA si el método no se ejecutó o no está en la lista
+    #All out es la lista de dos lineas arriba
+    #Component el nombre de la variable que se desea
+    #Para cada variable de interes que devuelva HyperHMM hay que hacer una llamada de las de abajo
     get_output <- function(method, component) {
         if (!exists(method, all_out)) return(NA)
         if (!exists(component, all_out[[method]])) return(NA)
@@ -210,7 +241,8 @@ evam <- function(x,
 
     ## To avoid repeating code
     get_paths_max <- function(method) {
-        if (paths_max) {
+        if (paths_max) { #creo que aquí deberíamos añadir algo para procesar la matriz de transición
+
             trans_mat_name <- ifelse(method == "MHN",
                                      "transitionMatrixCompExp",
                                      "trans_mat_genots")
@@ -317,6 +349,19 @@ evam <- function(x,
     BML_bootstrap = ifelse(exists("BML", all_out), opts$bml_opts$rep, NA),
     BML_primary_output = get_primary_output("BML"),
 
+    HyperHMM_trans_mat=get_output("HyperHMM", "trans_mat"),
+    HyperHMM_flux_mat=get_output("HyperHMM", "trans_flux_mat"),
+    HyperHMM_edges=get_output("HyperHMM", "edges"),
+    HyperHMM_all_genotypes=get_output("HyperHMM", "all_genotypes"),
+    HyperHMM_all_paths=get_output("HyperHMM", "all_paths"),
+    HyperHMM_predicted_genotype_freqs=get_output("HyperHMM", "predicted_genotype_freqs"),
+    HyperHMM_conditional_genotype_freqs=get_output("HyperHMM", "conditional_genotype_freqs"),
+    HyperHMM_n_features=get_output("HyperHMM", "n_features"),
+    HyperHMM_stats=get_output("HyperHMM", "stats"),
+    HyperHMM_raw_output=get_output("HyperHMM", "raw_output"),
+    HyperHMM_elapsed_time=get_output("HyperHMM", "elapsed_time"),
+    HyperHMM_primary_output=get_output("HyperHMM","primary_output"),
+
     methods = methods,
     original_data = xoriginal,
     analyzed_data = x,
@@ -331,7 +376,8 @@ evam <- function(x,
       hesbcn_opts = opts$hesbcn_opts,
       oncobn_opts = opts$oncobn_opts,
       mccbn_opts = opts$mccbn_opts,
-      hyper_traps_opts = opts$hyper_traps_opts
+      hyper_traps_opts = opts$hyper_traps_opts,
+      hyper_hmm_opts = opts$hyper_hmm_opts 
     ),
     call = match.call(),
     default_opts = default_opts
