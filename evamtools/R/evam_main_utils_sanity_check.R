@@ -39,7 +39,7 @@ check_WT <- function(x) {
 }
 
 check_valid_methods <- function(methods) {
-    accepted_methods <- c("OT", "OncoBN", "CBN", "MCCBN", "MHN", "HESBCN", "HyperTraPS", "BML")
+    accepted_methods <- c("OT", "OncoBN", "CBN", "MCCBN", "MHN", "HESBCN", "HyperTraPS", "BML", "HyperHMM")
     not_valid_methods <- which(!(methods %in% accepted_methods))
     
     return(not_valid_methods)
@@ -114,6 +114,19 @@ sanity_check_methods <- function(methods) {
             methods <- setdiff(methods, "MCCBN")
         }
     }
+    #Comprobar que el paquete hyperhmm esté instalado para generar el modelo
+    if ("HyperHMM" %in% methods) {
+        HYPERHMM_INSTALLED <- requireNamespace("hyperhmm", quietly = TRUE)
+
+        if (!HYPERHMM_INSTALLED) {
+            warning("HyperHMM method requested, but hyperhmm package not installed. ",
+                    "Removing HyperHMM from list of requested methods.",
+                    "Please install it with: devtools::install_github('StochasticBiology/hypertraps-ct', ref = 'bioconductor')")
+        } 
+                #devtools::install_github("StochasticBiology/hypertraps-ct", ref = "bioconductor")")
+            methods <- setdiff(methods, "HyperHMM")
+        } #aquí en un else se pueden meter comprobaciones de valores pasados a la función (initialstates...)
+        #Pero no sé hasta qué punto comprobar algo si hemos puesto los valores default
 
     if (length(methods) == 0) {
         stop("No valid methods given.")
