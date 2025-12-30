@@ -10,7 +10,8 @@ This function has been adapted from the HyperHMM package, available at \url{http
 plot_HyperHMM_bubbles(fitted.obj, labels = NULL, formatted = FALSE)
 }
 \arguments{
-\item{fitted.obj}{(fitted model)}
+\item{fitted.obj}{The output object directly returned by the \code{HyperHMM} function.
+    It must contain the transition data frame (transitions) and the number of features (L).}
 
 \item{labels}{(vector of characters) optional set of labels for features in plot}
 
@@ -33,3 +34,4 @@ plot_HyperHMM_bubbles(fitted)
 on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. \url https://doi.org/10.1101/2022.05.09.491130 
 
 }
+
