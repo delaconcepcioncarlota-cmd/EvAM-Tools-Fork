@@ -31,7 +31,7 @@ probs_from_HyperTraPS_discrete(x,
 
   \item{methods}{Vector of strings with the names of methods that we want to sample. If NULL, all
   methods with output in cpm_output. The list of available methods is
-  OT, OncoBN, CBN, MCCBN, MHN, HESBCN.}
+  OT, OncoBN, CBN, MCCBN, MHN, HESBCN, HyperTrsPS and HyperHMM.}
 
   \item{output}{A vector with one or more of the following possible
   outputs: sampled_genotype_counts, obs_genotype_transitions,
@@ -61,7 +61,7 @@ probs_from_HyperTraPS_discrete(x,
 }
 
 
-\value{A list, with a many entries as methods times number of components requested. For each method among CBN, MCCBN, HESBCN, and MHN:
+\value{A list, with a many entries as methods times number of components requested. For each method among CBN, MCCBN, HESBCN, MHN, HyperTraPs and HyperHMM:
 
     \item{sampled_genotype_counts}{Counts, or absolute genotype frequencies,
   obtained by sampling from the predicted frequencies. See also
@@ -227,4 +227,17 @@ stopifnot(isTRUE(all.equal(hcp[6:11, "cond.prob"],
 ## Get a sample
 outHT_SG <- sample_evam(outht, N = 1000)
 outHT_SG$HyperTraPS_sampled_genotype_counts
+
+## A few HyperHMM examples
+outhmm <- evam(Dat1,
+              methods = c("HyperHMM"),
+              hyper_hmm_opts = list( 
+                  initialstates = NULL, 
+                  seed = 1L, 
+                  nboot = 100L, 
+                  fullsample = 1L, 
+                  outputinput = 0L))
+outhm_sample <- sample_evam(outhmm, N=1000, methods = "HyperHMM")
+
+
 }

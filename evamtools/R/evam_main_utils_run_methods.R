@@ -359,7 +359,7 @@ run_HyperHMM <- function (x, opts){
         out_final <- list(
             primary_output = out,
             trans_mat = out$trans_matrix,
-            trans_flux_mat = out$trans_flux_mat,
+            trans_rate_mat = out$trans_rate_mat,
             edges = out$edges,
             predicted_genotype_freqs = out$predicted_freqs,
             conditional_genotype_freqs = out$conditional_freqs,

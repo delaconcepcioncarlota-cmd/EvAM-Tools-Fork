@@ -62,23 +62,23 @@ do_HyperHMM <- function(data,
     trans_mat[cbind(row_idx, col_idx)] <- edges$Probability
 
     #-------- TRANS FLUX MAT
-    trans_flux_mat <- Matrix(0,
+    trans_rate_mat <- Matrix(0,
                         nrow = length(ordered_names),
                         ncol = length(ordered_names),
                         sparse = TRUE)
-    rownames(trans_flux_mat) <- colnames(trans_flux_mat) <- ordered_names
+    rownames(trans_rate_mat) <- colnames(trans_rate_mat) <- ordered_names
 
     row_idx_flux <- match(edges$From, ordered_names)
     col_idx_flux <- match(edges$To, ordered_names)
 
-    trans_flux_mat[cbind(row_idx_flux, col_idx_flux)] <- boot0$Flux
+    trans_rate_mat[cbind(row_idx_flux, col_idx_flux)] <- boot0$Flux
 
 
     #--------- FRECUENCIAS PREDICHAS DE LOS GENOTIPOS
     pre_genotype_freqs <- probs_from_trm(trans_mat, all_genotypes = TRUE)
 
     #--------- FRECUENCIAS CONDICIONALES DE LOS GENOTIPOS
-    cond_genotype_freqs <- probs_from_trm(trans_flux_mat, all_genotypes = TRUE)
+    cond_genotype_freqs <- probs_from_trm(trans_rate_mat, all_genotypes = TRUE)
     
     features=list(N=out$L, names_features=feature_labels)
 
@@ -86,7 +86,7 @@ do_HyperHMM <- function(data,
         edges = edges,
         trans_matrix = trans_mat,
         predicted_freqs = pre_genotype_freqs,
-        trans_flux_mat = trans_flux_mat,
+        trans_rate_mat = trans_rate_mat,
         conditional_freqs = cond_genotype_freqs,
         stats = out$stats,
         paths_all = out$viz,
