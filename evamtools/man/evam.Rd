@@ -4,7 +4,7 @@
 \usage{
 evam(x,
      methods = c("CBN", "OT", "HESBCN", "MHN", "OncoBN", "MCCBN",
-                 "HyperTraPS", "BML"),
+                 "HyperTraPS", "BML","HyperHMM"),
      max_cols = 15,
      cores = detectCores(),
      paths_max = FALSE,
