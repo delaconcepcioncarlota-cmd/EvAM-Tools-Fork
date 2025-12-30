@@ -348,7 +348,7 @@ evam <- function(x,
     BML_primary_output = get_primary_output("BML"),
 
     HyperHMM_trans_mat=get_output("HyperHMM", "trans_mat"),
-    HyperHMM_flux_mat=get_output("HyperHMM", "trans_rate_mat"),
+    HyperHMM_trans_rate_mat=get_output("HyperHMM", "trans_rate_mat"),
     HyperHMM_edges=get_output("HyperHMM", "edges"),
     HyperHMM_all_paths=get_output("HyperHMM", "all_paths"),
     HyperHMM_predicted_genotype_freqs=get_output("HyperHMM", "predicted_genotype_freqs"),
