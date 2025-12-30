@@ -121,9 +121,7 @@ sanity_check_methods <- function(methods) {
         if (!HYPERHMM_INSTALLED) {
             warning("HyperHMM method requested, but hyperhmm package not installed. ",
                     "Removing HyperHMM from list of requested methods.",
-                    "Please install it with: devtools::install_github('StochasticBiology/hypertraps-ct', ref = 'bioconductor')")
-        } 
-                #devtools::install_github("StochasticBiology/hypertraps-ct", ref = "bioconductor")")
+                    "Please install it with: devtools::install_github('StochasticBiology/hyperhmm', ref = 'bioconductor')")
             methods <- setdiff(methods, "HyperHMM")
         } #aquí en un else se pueden meter comprobaciones de valores pasados a la función (initialstates...)
         #Pero no sé hasta qué punto comprobar algo si hemos puesto los valores default
