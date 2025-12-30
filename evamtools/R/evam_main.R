@@ -199,19 +199,6 @@ evam <- function(x,
             opts$hyper_traps_opts$featurenames <- colnames(x)
         }
     }
-    if ("HyperHMM" %in% methods) {
-        HYPERHMM_INSTALLED <- requireNamespace("hyperhmm", quietly = TRUE)
-
-        if (!HYPERHMM_INSTALLED) {
-            warning("HyperHMM method requested, but hyperhmm package not installed. ",
-                    "Removing HyperHMM from list of requested methods.",
-                    "Please install it with: devtools::install_github('StochasticBiology/hypertraps-ct', ref = 'bioconductor')")
-        } 
-                #devtools::install_github("StochasticBiology/hypertraps-ct", ref = "bioconductor")")
-            methods <- setdiff(methods, "HyperHMM")
-        } #aquí en un else se pueden meter comprobaciones de valores pasados a la función (initialstates...)
-        #Pero no sé hasta qué punto comprobar algo si hemos puesto los valores default
-
 
   ## Sanity check of gene names
     sanity_check_colnames(colnames(x), TRUE)
