@@ -2,9 +2,9 @@
 \alias{plot_HyperHMM_hypercube_flux}
 \title{Adapted HyperTraPS plot for HyperHMM outputs}
 \description{
-
     This function visualized the progression pathway inferred by HyperHMM as a DAG (directed acyclic graph).
     It represents the hypercube of states where nodes represent genetic states and edges represent transitions betweem them.
+    This function has been adapted from the HyperHMM package, available at \url{https://github.com/StochasticBiology/hypercube-hmm.git}.
 }
 
 \usage{
