@@ -47,7 +47,7 @@ plot_HyperHMM_hypercube(
 
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
-fitted = evam(m, model = "HyperHMM")
+fitted = evam(m, methods = "HyperHMM")
 plot_HyperHMM_hypercube(fitted$HyperHMM_primary_output)
 }
 
