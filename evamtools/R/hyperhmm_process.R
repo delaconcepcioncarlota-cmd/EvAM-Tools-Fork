@@ -78,7 +78,7 @@ do_HyperHMM <- function(data,
     pre_genotype_freqs <- probs_from_trm(trans_mat, all_genotypes = TRUE)
 
     #--------- FRECUENCIAS CONDICIONALES DE LOS GENOTIPOS
-    cond_genotype_freqs <- probs_from_trm(trans_rate_mat, all_genotypes = TRUE)
+    flux_genotype_freqs <- probs_from_trm(trans_rate_mat, all_genotypes = TRUE)
     
     features=list(N=out$L, names_features=feature_labels)
 
@@ -87,7 +87,7 @@ do_HyperHMM <- function(data,
         trans_matrix = trans_mat,
         predicted_freqs = pre_genotype_freqs,
         trans_rate_mat = trans_rate_mat,
-        conditional_freqs = cond_genotype_freqs,
+        flux_freqs = flux_genotype_freqs,
         stats = out$stats,
         paths_all = out$viz,
         n_features = features,

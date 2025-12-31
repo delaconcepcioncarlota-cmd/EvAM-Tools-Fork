@@ -138,6 +138,7 @@ evam <- function(x,
     methods <- gsub("Hypertraps", "HyperTraPS", methods, fixed = TRUE)
     methods <- gsub("hypertraps", "HyperTraPS", methods, fixed = TRUE)
 
+    ## Dealing with the multiple spellings of HyperHMM
     methods <- gsub("hyperhmm", "HyperHMM",methods, fixed=TRUE)
     methods <- gsub("Hyperhmm", "HyperHMM",methods, fixed=TRUE)
     methods <- gsub("hyperHmm", "HyperHMM",methods, fixed=TRUE)
@@ -352,10 +353,9 @@ evam <- function(x,
     HyperHMM_edges=get_output("HyperHMM", "edges"),
     HyperHMM_all_paths=get_output("HyperHMM", "all_paths"),
     HyperHMM_predicted_genotype_freqs=get_output("HyperHMM", "predicted_genotype_freqs"),
-    HyperHMM_conditional_genotype_freqs=get_output("HyperHMM", "conditional_genotype_freqs"),
+    HyperHMM_flux_genotype_freqs=get_output("HyperHMM", "flux_genotype_freqs"),
     HyperHMM_n_features=get_output("HyperHMM", "n_features"),
     HyperHMM_stats=get_output("HyperHMM", "stats"),
-    HyperHMM_raw_output=get_output("HyperHMM", "raw_output"),
     HyperHMM_elapsed_time=get_output("HyperHMM", "elapsed_time"),
     HyperHMM_primary_output=get_output("HyperHMM","primary_output"),
 

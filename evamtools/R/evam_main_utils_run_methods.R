@@ -357,17 +357,15 @@ run_HyperHMM <- function (x, opts){
     time_out <- system.time({
         out <- do_HyperHMM(x,opts=opts)
         out_final <- list(
-            primary_output = out,
+            primary_output = out$raw_output,
             trans_mat = out$trans_matrix,
             trans_rate_mat = out$trans_rate_mat,
             edges = out$edges,
             predicted_genotype_freqs = out$predicted_freqs,
-            conditional_genotype_freqs = out$conditional_freqs,
+            flux_genotype_freqs = out$flux_freqs,
             all_paths = out$paths_all,
             stats = out$stats,
-            n_features = out$n_features,
-            raw_output = out$raw_output
-
+            n_features = out$n_features
         )
     })["elapsed"]
     return(list(time_out = time_out, out = out_final))
