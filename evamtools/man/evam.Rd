@@ -307,7 +307,7 @@ probability of numbers of mutations observed in the sample. You can
 	\item{HyperTraPS_elapsed_time}{As for other methods.}
 	This is just
 	a renaming and restructuring of that output, which are the
-	"Probabilities for individual transitions", from \url{https://github.com/StochasticBiology/hypertraps-ct/tree/bioconductor#output}.}
+	"Probabilities for individual transitions", from \url{https://github.com/StochasticBiology/hypertraps-ct/tree/bioconductor#output}.
 	\item{HyperTraPS_primary_output}{All the ouput, as provided by the
 	\code{\link[hypertrapsct:HyperTraPS]{HyperTraPS}} function. See
 	there for details.}
@@ -335,8 +335,8 @@ probability of numbers of mutations observed in the sample. You can
 
   \item{HyperHMM_flux_genotype_freqs}{Flux of genotypes from the HyperHMM model, as a data frame.} 
 
-  \item{HyperHMM_n_features}{Number of features ($N) and their names ($names_features).} 
-  \item{HyperHMM_stats}{Feature-level statistics including feature ID ($feature), order ($order), mean ($mean), and standard deviation ($sd).} 
+  \item{HyperHMM_n_features}{Number of features (\code{$N}) and their names (\code{$names_features}).} 
+  \item{HyperHMM_stats}{Feature-level statistics including feature ID (\code{$features}), order (\code{$order}), mean (\code{$mean}), and standard deviation (\code{$sd}).} 
 
   \item{HyperHMM_elapsed_time}{As for OT.} 
 
