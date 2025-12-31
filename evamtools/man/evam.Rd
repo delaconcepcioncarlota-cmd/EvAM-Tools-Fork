@@ -226,7 +226,15 @@ probability of numbers of mutations observed in the sample. You can
   }
 \item{hyperhmm_opts}{A named list with arguments passed to 
  HyperHMM. See the help for \code{\link[hyperhmm:HyperHMM]{HyperHMM}} and 
- \url{https://github.com/StochasticBiology/hypercube-hmm#Inference} 
+ \url{https://github.com/StochasticBiology/hypercube-hmm#Inference}
+ \describe{
+       \item{obs: }{(matrix) Matrix of observations.}
+      \item{initialstates: }{(matrix) Optional initial states.}
+      \item{seed: }{(integer, default 1) A random number seed.}
+      \item{nboot: }{(integer, default 100) Number of bootstraps.}
+      \item{fullsample: }{(integer) Whether to output the full set of simulated samples for each bootstrap resample.}
+      \item{outputinput: }{(integer) Whether to include the input data in the output object for traceability.}
+    } 
  }
 
 \item{only_used_methods}{If TRUE, do not return list components that
@@ -491,7 +499,10 @@ Executes all CPMS given a cross sectional data set.
   Plos Computational Biology, 20(9), e1012393.
   \url{https://doi.org/10.1371/journal.pcbi.1012393}
 
+\bold{HyperHMM} 
 
+- Moen, M. T., & Johnston, I. G. (2022). Efficient inference of evolutionary and progressive dynamics on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. 
+\url{https://doi.org/10.1101/2022.05.09.491130}
 
 
 \bold{Conditional prediction of genotypes and probabilities of paths from CPMs}
@@ -513,11 +524,6 @@ Executes all CPMS given a cross sectional data set.
 \bold{Reference in details}
 
 -  Weinreich, D. M., & Chao, L. (2005). Rapid evolutionary escape by large populations from local fitness peaks is likely in nature. Evolution, 59(6),   1175–1182. \url{http://dx.doi.org/10.1111/j.0014-3820.2005.tb01769.x}
-
-\bold{HyperHMM} 
-
-- Moen, M. T., & Johnston, I. G. (2022). Efficient inference of evolutionary and progressive dynamics on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. 
-\url{https://doi.org/10.1101/2022.05.09.491130}
 
 }
  
