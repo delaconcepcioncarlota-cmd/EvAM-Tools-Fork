@@ -102,7 +102,7 @@ evam(x,
     \dQuote{MCCBN}, \dQuote{MHN}, \dQuote{HESBCN}, \dQuote{HyperTraPS}, 
     \dQuote{BML} \dQuote{HyperHMM} (if you type \dQuote{HyperTraps} or \dQuote{hypertraps} 
     it will be turned into \dQuote{HyperTraPS}) (if you type \dQuote{hyperhmm} or \dQuote{Hyperhmm} 
-    it will be turned into \dQuote{HyperHMM}).} }
+    it will be turned into \dQuote{HyperHMM}).} 
 
 
   \item{max_cols}{Maximum number of columns to use in the analysis. If x has > max_cols, selected columns are those with the largest number of events.}
