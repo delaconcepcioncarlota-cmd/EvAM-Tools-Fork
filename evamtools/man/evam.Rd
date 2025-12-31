@@ -227,6 +227,7 @@ probability of numbers of mutations observed in the sample. You can
 \item{hyperhmm_opts}{A named list with arguments passed to 
  HyperHMM. See the help for \code{\link[hyperhmm:HyperHMM]{HyperHMM}} and 
  \url{https://github.com/StochasticBiology/hypercube-hmm#Inference} 
+ }
 
 \item{only_used_methods}{If TRUE, do not return list components that
   contain only an NA (for example, the list components for not-used methods). }
@@ -516,7 +517,7 @@ Executes all CPMS given a cross sectional data set.
 \bold{HyperHMM} 
 
 - Moen, M. T., & Johnston, I. G. (2022). Efficient inference of evolutionary and progressive dynamics on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. 
-\url https://doi.org/10.1101/2022.05.09.491130 
+\url{https://doi.org/10.1101/2022.05.09.491130}
 
 }
  
