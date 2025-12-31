@@ -29,14 +29,14 @@ A ggplot output
 
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
-fitted = EvamTools(m, model = "HyperHMM")
-plot_HyperHMM_pfg(fitted)
+fitted = evam(m, model = "HyperHMM")
+plot_HyperHMM_pfg(fitted$HyperHMM_primary_output)
 }
 
 \references{
     \bold{HyperHMM} 
 
 - Moen, M. T., & Johnston, I. G. (2022). Efficient inference of evolutionary and progressive dynamics 
-on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. \url https://doi.org/10.1101/2022.05.09.491130 
+on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. \url{https://doi.org/10.1101/2022.05.09.491130}
 
 }
