@@ -1,10 +1,3 @@
-set.seed(123) # Cualquier número sirve
-datos <- data.frame(
-  a = sample(c(0, 1), 10, replace = TRUE),
-  b = sample(c(0, 1), 10, replace = TRUE),
-  c = sample(c(0,1 ), 10, replace = TRUE)
-)
-
 #Check of translation from binary to int
 test_that("Transforming for binary to integer",{
     set.seed(123) # Cualquier número sirve
@@ -49,6 +42,25 @@ test_that("Check matrix dimensions",{
     expect_equal(ncol(r_evam$HyperHMM_trans_mat),expected_dim)
 })
 
+test_that("Check number of features",{
+    set.seed(123)
+    dataf <- data.frame(
+            a = sample(c(0, 1), 10, replace = TRUE),
+            b = sample(c(0, 1), 10, replace = TRUE),
+            c = sample(c(0,1 ), 10, replace = TRUE))
+    datam <- as.matrix(dataf)
+    feature_labels <- colnames(dataf)
+    num_features <- ncol(dataf)
+    expected_dim <- 2^num_features
+
+    r_evam <- evam(datam, method="HyperhMm")
+    r_hhmm <- HyperHMM(datam)
+
+    expect_equal(r_evam$HyperHMM_n_features$N, num_features)
+    expect_equal(r_hhmm$L, num_features)
+    expect_identical(r_evam$HyperHMM_n_features$N, r_hhmm$L)
+})
+
 test_that("HyperHMM transition matrix check", {
     set.seed(123)
     m <- data.frame(
@@ -85,4 +97,19 @@ test_that("HyperHMM transition matrix check", {
     expect_equal(t_mat, exp_mat)
     
     expect_equal(dim(t_mat), c(8, 8))
+})
+
+test_that("Check initialstates argument on hyper_hmm_opts function",{
+    #Matriz de estados iniciales
+    initial_states_dataf<-data.frame(a = c(0,0,0,0,0,0,0,0,0,0),
+    b = c(1,0,0,0,0,0,1,0,0,1),
+    c = c(1,0,0,1,0,0,0,0,1,0))
+    initial_states_matrix <- as.matrix(initial_states_dataf)
+    #Opciones pasadas a evam como argumento (lista)
+    opts_HyperHMM = list(initialstates=initial_states_matrix)
+
+    r2<-evam(datam, methods="HyperHMM", hyper_hmm_opts=opts_HyperHMM)
+    t_mat2 <- r$trans_matrix
+    #Test para comprobar que genera una matriz de transición correctamente
+    expect_s4_class(t_mat2, "dgCMatrix")
 })
