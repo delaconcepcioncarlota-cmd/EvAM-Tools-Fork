@@ -72,7 +72,7 @@ test_that("HyperHMM transition matrix check", {
     
     t_mat <- r$HyperHMM_trans_mat
 
-    expect_s4_class(t_mat, "dgCMatrix") 
+    expect_true(inherits(t_mat, "CsparseMatrix"))
 
     states <- c("WT", "a", "b", "c", "a, b", "a, c", "b, c", "a, b, c")
     exp_mat <- matrix(0, nrow = 8, ncol = 8, dimnames = list(states, states))
@@ -111,7 +111,7 @@ test_that("HyperHMM transition rate matrix check", {
     
     t_rate_mat <- r$HyperHMM_trans_rate_mat
 
-    expect_s4_class(t_rate_mat, "dgCMatrix") 
+    expect_true(inherits(t_mat, "CsparseMatrix"))
 
     states <- c("WT", "a", "b", "c", "a, b", "a, c", "b, c", "a, b, c")
     exp_rate_mat <- matrix(0, nrow = 8, ncol = 8, dimnames = list(states, states))
