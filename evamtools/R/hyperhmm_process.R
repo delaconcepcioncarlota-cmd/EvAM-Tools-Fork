@@ -60,7 +60,6 @@ do_HyperHMM <- function(data,
     col_idx <- match(edges$To, ordered_names)
     
     trans_mat[cbind(row_idx, col_idx)] <- edges$Probability
-    trans_mat <- as(trans_mat, "dgCMatrix") #Forzamos conversión a dgCMatrix
 
     #-------- TRANS RATE MAT
     trans_rate_mat <- Matrix(0,
