@@ -54,7 +54,7 @@ test_that("Check number of features",{
     expected_dim <- 2^num_features
 
     r_evam <- evam(datam, method="HyperhMm")
-    r_hhmm <- HyperHMM(datam)
+    r_hhmm <- HyperHMM::hyperhmm(datam)
 
     expect_equal(r_evam$HyperHMM_n_features$N, num_features)
     expect_equal(r_hhmm$L, num_features)
@@ -137,7 +137,13 @@ test_that("HyperHMM transition rate matrix check", {
 })
 
 test_that("Check initialstates argument on hyper_hmm_opts function",{
-    #Matriz de estados iniciales
+    set.seed(123) # Cualquier número sirve
+    dataf <- data.frame(
+            a = sample(c(0, 1), 10, replace = TRUE),
+            b = sample(c(0, 1), 10, replace = TRUE),
+            c = sample(c(0,1 ), 10, replace = TRUE))
+    datam <- as.matrix(dataf)
+    #Initial states matrix
     initial_states_dataf<-data.frame(a = c(0,0,0,0,0,0,0,0,0,0),
     b = c(1,0,0,0,0,0,1,0,0,1),
     c = c(1,0,0,1,0,0,0,0,1,0))
