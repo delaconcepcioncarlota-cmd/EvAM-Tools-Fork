@@ -1,3 +1,5 @@
+t1 <- Sys.time()
+
 #Check of translation from binary to int
 test_that("Transforming for binary to integer",{
     set.seed(123) # Cualquier número sirve
@@ -188,3 +190,63 @@ test_that("HyperHMM plotting basic execution", {
     expect_s3_class(plot_HyperHMM_hypercube(r$HyperHMM_primary_output), "ggplot")
     expect_silent(suppressMessages(plot_HyperHMM_pfg(r$HyperHMM_primary_output, pfg.layout = "matrix")))
 })
+
+test_that("Check only correct input dimensions", {
+
+    m <- matrix(c(1, 0, 0, 1, 1, 1), ncol = 2)
+
+    colnames(m) <- c("a", "b")
+
+    expect_error(evam(m, method = "HyperHMM"))
+    expect_error(evam(c(1, 0, 1), method = "HyperHMM"))
+})
+
+test_that("HyperHMM plotting functions handle different thresholds", {
+    set.seed(123)
+    dataf <- data.frame(
+        a = sample(c(0, 1), 10, replace = TRUE),
+        b = sample(c(0, 1), 10, replace = TRUE),
+        c = sample(c(0, 1), 10, replace = TRUE)
+    )
+    
+    r <- evam(dataf, methods = "HyperHMM")
+
+    expect_no_error(plot_HyperHMM_hypercube(r$HyperHMM_primary_output, threshold = 0.99))
+
+    p_flux <- plot_HyperHMM_hypercube_flux(r$HyperHMM_primary_output, thresh = 0.01)
+    expect_s3_class(p_flux, "ggplot")
+})
+
+test_that("Check evam function dealing with spelling errors in HyperHMM", {
+    set.seed(123)
+    dataf <- data.frame(
+            a = sample(c(0, 1), 10, replace = TRUE),
+            b = sample(c(0, 1), 10, replace = TRUE),
+            c = sample(c(0,1 ), 10, replace = TRUE))
+    datam <- as.matrix(dataf)
+
+    try_correct=evam(datam, methods="HyperHMM")
+    try_Hyperhmm=evam(datam, methods="Hyperhmm")
+    try_HyperHmm=evam(datam, methods="hyperHmm")
+    try_hyperhMm=evam(datam, methods="hyperhMm")
+    try_hyperhmM=evam(datam, methods="hyperhmM")
+    try_HyperHmm=evam(datam, methods="HyperHmm")
+    try_HyperHMm=evam(datam, methods="HyperHMm")
+    try_HyperhMM=evam(datam, methods="HyperhMM")
+    try_HyperHmM=evam(datam, methods="HyperHmM")
+    try_hyperHMM=evam(datam, methods="hyperHMM")
+
+    expect_equal(try_correct$HyperHMM_trans_mat, try_Hyperhmm$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_HyperHmm$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_hyperhMm$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_hyperhmM$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_HyperHmm$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_HyperHMm$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_HyperhMM$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_HyperHmM$HyperHMM_trans_mat)
+    expect_equal(try_correct$HyperHMM_trans_mat, try_hyperHMM$HyperHMM_trans_mat)
+})
+
+
+cat("\n Done test.HyperHMM.R. Seconds = ",
+    as.vector(difftime(Sys.time(), t1, units = "secs")), "\n")
