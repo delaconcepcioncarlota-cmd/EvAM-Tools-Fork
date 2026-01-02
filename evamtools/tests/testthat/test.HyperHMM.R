@@ -14,14 +14,14 @@ test_that("Transforming for binary to integer",{
     r <- evam(datam, methods="HyperHMM")
 
     all_ids <- 0:(2^(num_features)-1)
-    decoded_states <- vapply(all_ids, translate_state,
+    decoded_states <- vapply(all_ids, evamtools:::translate_state,
                             character(1),
                             genes = feature_labels)
     expect_equal(evamtools:::translate_state(0,genes=feature_labels),"WT")
     expect_equal(evamtools:::translate_state(1,genes=feature_labels),"c")
     expect_equal(evamtools:::translate_state(2,genes=feature_labels),"b")
     expect_equal(evamtools:::translate_state(3,genes=feature_labels),"b, c")
-    expect_equal(evamtools::translate_state(4,genes=feature_labels),"a")
+    expect_equal(evamtools:::translate_state(4,genes=feature_labels),"a")
     expect_equal(evamtools:::translate_state(5,genes=feature_labels),"a, c")
     expect_equal(evamtools:::translate_state(6,genes=feature_labels),"a, b")
     expect_equal(evamtools:::translate_state(7,genes=feature_labels),"a, b, c")
@@ -56,7 +56,7 @@ test_that("Check number of features",{
     expected_dim <- 2^num_features
 
     r_evam <- evam(datam, methods="HyperHMM")
-    r_hhmm <- HyperHMM::hyperhmm(datam)
+    r_hhmm <- hyperhmm::HyperHMM(datam)
 
     expect_equal(r_evam$HyperHMM_n_features$N, num_features)
     expect_equal(r_hhmm$L, num_features)
