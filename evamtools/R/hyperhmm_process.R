@@ -62,7 +62,7 @@ do_HyperHMM <- function(data,
     trans_mat[cbind(row_idx, col_idx)] <- edges$Probability
     trans_mat <- as(trans_mat, "dgCMatrix") #Forzamos conversión a dgCMatrix
 
-    #-------- TRANS FLUX MAT
+    #-------- TRANS RATE MAT
     trans_rate_mat <- Matrix(0,
                         nrow = length(ordered_names),
                         ncol = length(ordered_names),
