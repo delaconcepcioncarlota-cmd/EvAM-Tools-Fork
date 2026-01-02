@@ -175,22 +175,6 @@ test_that("Check initialstates argument on hyper_hmm_opts function",{
     expect_s4_class(t_mat2, "dgCMatrix")
 })
 
-test_that("HyperHMM plotting basic execution", {
-    set.seed(123)
-
-    dataf <- data.frame(
-    a = sample(c(0, 1), 10, replace = TRUE),
-    b = sample(c(0, 1), 10, replace = TRUE),
-    c = sample(c(0,1 ), 10, replace = TRUE)
-    )
-    r <- evam(as.matrix(dataf), methods = "HyperHMM")
-    
-    # Verificación de objetos gráficos
-    expect_s3_class(plot_HyperHMM_bubbles(r$HyperHMM_primary_output), "ggplot")
-    expect_s3_class(plot_HyperHMM_hypercube(r$HyperHMM_primary_output), "ggplot")
-    expect_silent(suppressMessages(plot_HyperHMM_pfg(r$HyperHMM_primary_output, pfg.layout = "matrix")))
-})
-
 test_that("Check only correct input dimensions", {
 
     m <- matrix(c(1, 0, 0, 1, 1, 1), ncol = 2)
@@ -199,22 +183,6 @@ test_that("Check only correct input dimensions", {
 
     expect_error(evam(m, method = "HyperHMM"))
     expect_error(evam(c(1, 0, 1), method = "HyperHMM"))
-})
-
-test_that("HyperHMM plotting functions handle different thresholds", {
-    set.seed(123)
-    dataf <- data.frame(
-        a = sample(c(0, 1), 10, replace = TRUE),
-        b = sample(c(0, 1), 10, replace = TRUE),
-        c = sample(c(0, 1), 10, replace = TRUE)
-    )
-    
-    r <- evam(dataf, methods = "HyperHMM")
-
-    expect_no_error(plot_HyperHMM_hypercube(r$HyperHMM_primary_output, threshold = 0.99))
-
-    p_flux <- plot_HyperHMM_hypercube_flux(r$HyperHMM_primary_output, thresh = 0.01)
-    expect_s3_class(p_flux, "ggplot")
 })
 
 test_that("Check evam function dealing with spelling errors in HyperHMM", {
@@ -247,6 +215,37 @@ test_that("Check evam function dealing with spelling errors in HyperHMM", {
     expect_equal(try_correct$HyperHMM_trans_mat, try_hyperHMM$HyperHMM_trans_mat)
 })
 
+test_that("HyperHMM plotting basic execution", {
+    set.seed(123)
+
+    dataf <- data.frame(
+    a = sample(c(0, 1), 10, replace = TRUE),
+    b = sample(c(0, 1), 10, replace = TRUE),
+    c = sample(c(0,1 ), 10, replace = TRUE)
+    )
+    r <- evam(as.matrix(dataf), methods = "HyperHMM")
+    
+    # Verificación de objetos gráficos
+    expect_s3_class(plot_HyperHMM_bubbles(r$HyperHMM_primary_output), "ggplot")
+    expect_s3_class(plot_HyperHMM_hypercube(r$HyperHMM_primary_output), "ggplot")
+    expect_silent(suppressMessages(plot_HyperHMM_pfg(r$HyperHMM_primary_output, pfg.layout = "matrix")))
+})
+
+test_that("HyperHMM plotting functions handle different thresholds", {
+    set.seed(123)
+    dataf <- data.frame(
+        a = sample(c(0, 1), 10, replace = TRUE),
+        b = sample(c(0, 1), 10, replace = TRUE),
+        c = sample(c(0, 1), 10, replace = TRUE)
+    )
+    
+    r <- evam(dataf, methods = "HyperHMM")
+
+    expect_no_error(plot_HyperHMM_hypercube(r$HyperHMM_primary_output, threshold = 0.99))
+
+    p_flux <- plot_HyperHMM_hypercube_flux(r$HyperHMM_primary_output, thresh = 0.01)
+    expect_s3_class(p_flux, "ggplot")
+})
 
 cat("\n Done test.HyperHMM.R. Seconds = ",
     as.vector(difftime(Sys.time(), t1, units = "secs")), "\n")
