@@ -36,7 +36,7 @@ test_that("Check matrix dimensions",{
     num_features <- ncol(dataf)
     expected_dim <- 2^num_features
 
-    r_evam <- evam(dataf, method="HyperHMM")
+    r_evam <- evam(dataf, methods="HyperHMM")
 
     expect_equal(nrow(r_evam$HyperHMM_trans_mat),expected_dim)
     expect_equal(ncol(r_evam$HyperHMM_trans_mat),expected_dim)
@@ -53,7 +53,7 @@ test_that("Check number of features",{
     num_features <- ncol(dataf)
     expected_dim <- 2^num_features
 
-    r_evam <- evam(datam, method="HyperhMm")
+    r_evam <- evam(datam, methods="HyperHMM")
     r_hhmm <- HyperHMM::hyperhmm(datam)
 
     expect_equal(r_evam$HyperHMM_n_features$N, num_features)
@@ -68,11 +68,11 @@ test_that("HyperHMM transition matrix check", {
     b = sample(c(0, 1), 10, replace = TRUE),
     c = sample(c(0,1 ), 10, replace = TRUE))
     
-    r <- evam(m, method="HyperHMM")
+    r <- evam(m, methods="HyperHMM")
     
     t_mat <- r$HyperHMM_trans_mat
 
-    expect_true(inherits(t_mat, "CsparseMatrix"))
+    expect_true(inherits(t_mat, "dgCMatrix"))
 
     states <- c("WT", "a", "b", "c", "a, b", "a, c", "b, c", "a, b, c")
     exp_mat <- matrix(0, nrow = 8, ncol = 8, dimnames = list(states, states))
@@ -107,11 +107,11 @@ test_that("HyperHMM transition rate matrix check", {
     c = sample(c(0,1 ), 10, replace = TRUE)
     )
     
-    r <- evam(m, method="HyperHMM")
+    r <- evam(m, methods="HyperHMM")
     
     t_rate_mat <- r$HyperHMM_trans_rate_mat
 
-    expect_true(inherits(t_mat, "CsparseMatrix"))
+    expect_true(inherits(t_rate_mat, "dgCMatrix"))
 
     states <- c("WT", "a", "b", "c", "a, b", "a, c", "b, c", "a, b, c")
     exp_rate_mat <- matrix(0, nrow = 8, ncol = 8, dimnames = list(states, states))
@@ -137,22 +137,38 @@ test_that("HyperHMM transition rate matrix check", {
 })
 
 test_that("Check initialstates argument on hyper_hmm_opts function",{
-    set.seed(123) # Cualquier número sirve
-    dataf <- data.frame(
-            a = sample(c(0, 1), 10, replace = TRUE),
-            b = sample(c(0, 1), 10, replace = TRUE),
-            c = sample(c(0,1 ), 10, replace = TRUE))
-    datam <- as.matrix(dataf)
-    #Initial states matrix
-    initial_states_dataf<-data.frame(a = c(0,0,0,0,0,0,0,0,0,0),
-    b = c(1,0,0,0,0,0,1,0,0,1),
-    c = c(1,0,0,1,0,0,0,0,1,0))
-    initial_states_matrix <- as.matrix(initial_states_dataf)
-    #Opciones pasadas a evam como argumento (lista)
-    opts_HyperHMM = list(initialstates=initial_states_matrix)
+    m = matrix(c(1,0,0,0,0,
+                   1,1,0,0,0,
+                   1,1,1,0,0,
+                   1,1,1,1,0,
+                   1,1,1,1,1,
+                   0,0,0,0,1,
+                   0,0,0,1,1,
+                   0,0,1,1,1,
+                   0,1,1,1,1,
+                   1,1,1,1,1), byrow=TRUE, ncol = 5)
+    colnames(m)<-c("a","b","c","d","e")
+    #Matriz de estados iniciales
+    m_initial_states = matrix(c(0,0,0,0,0,
+                   1,0,0,0,0,
+                   1,1,0,0,0,
+                   1,1,1,0,0,
+                   1,1,1,1,0,
+                   0,0,0,0,0,
+                   0,0,0,0,1,
+                   0,0,0,1,1,
+                   0,0,1,1,1,
+                   0,1,1,1,1), byrow=TRUE, ncol = 5)
+    colnames(m_initial_states)<-c("a","b","c","d","e")
 
-    r2<-evam(datam, methods="HyperHMM", hyper_hmm_opts=opts_HyperHMM)
-    t_mat2 <- r$trans_matrix
+    feature_labels <- colnames(m)
+    num_features <- ncol(m)
+
+    #Opciones pasadas a evam como argumento (lista)
+    opts_HyperHMM = list(initialstates=m_initial_states)
+
+    r2<-evam(m, methods="HyperHMM", hyper_hmm_opts=opts_HyperHMM)
+    t_mat2 <- r2$HyperHMM_trans_mat
     #Test para comprobar que genera una matriz de transición correctamente
     expect_s4_class(t_mat2, "dgCMatrix")
 })
