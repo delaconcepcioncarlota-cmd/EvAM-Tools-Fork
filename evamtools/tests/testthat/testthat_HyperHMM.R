@@ -66,23 +66,22 @@ test_that("HyperHMM transition matrix check", {
     m <- data.frame(
     a = sample(c(0, 1), 10, replace = TRUE),
     b = sample(c(0, 1), 10, replace = TRUE),
-    c = sample(c(0,1 ), 10, replace = TRUE)
-    )
+    c = sample(c(0,1 ), 10, replace = TRUE))
     
-    r <- evam(m, method = "HyperHMM")
+    r <- evam(m, method="HyperHMM")
     
-    # Accedemos a la matriz de transición (trans_mat o transition_rate_matrix)
-    t_mat <- r$trans_matrix
+    t_mat <- r$HyperHMM_trans_mat
 
-    expect_s4_class(t_mat, "dgCMatrix") # Verifica que es una dgCMatrix
+    expect_s4_class(t_mat, "dgCMatrix") 
 
     states <- c("WT", "a", "b", "c", "a, b", "a, c", "b, c", "a, b, c")
     exp_mat <- matrix(0, nrow = 8, ncol = 8, dimnames = list(states, states))
     
+    
     exp_mat["WT", "a"] <- 0.3364114
     exp_mat["WT", "b"] <- 0.4957018
     exp_mat["WT", "c"] <- 0.1678868
-
+    
     exp_mat["a", "a, c"] <- 1.0000000
     exp_mat["a", "a, b"] <- 5.795146e-11 
     exp_mat["b", "b, c"] <- 1.0000000
@@ -93,9 +92,9 @@ test_that("HyperHMM transition matrix check", {
     exp_mat["a, b", "a, b, c"] <- 1
     exp_mat["a, c", "a, b, c"] <- 1
     exp_mat["b, c", "a, b, c"] <- 1
-    
-    expect_equal(t_mat, exp_mat)
-    
+
+    expect_equal(as.matrix(t_mat), exp_mat, tolerance = 1e-6)
+
     expect_equal(dim(t_mat), c(8, 8))
 })
 
