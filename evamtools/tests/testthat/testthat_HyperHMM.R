@@ -98,6 +98,44 @@ test_that("HyperHMM transition matrix check", {
     expect_equal(dim(t_mat), c(8, 8))
 })
 
+test_that("HyperHMM transition rate matrix check", {
+    set.seed(123)
+
+    m <- data.frame(
+    a = sample(c(0, 1), 10, replace = TRUE),
+    b = sample(c(0, 1), 10, replace = TRUE),
+    c = sample(c(0,1 ), 10, replace = TRUE)
+    )
+    
+    r <- evam(m, method="HyperHMM")
+    
+    t_rate_mat <- r$HyperHMM_trans_rate_mat
+
+    expect_s4_class(t_rate_mat, "dgCMatrix") 
+
+    states <- c("WT", "a", "b", "c", "a, b", "a, c", "b, c", "a, b, c")
+    exp_rate_mat <- matrix(0, nrow = 8, ncol = 8, dimnames = list(states, states))
+
+    exp_rate_mat["WT", "a"] <- 0.3364114
+    exp_rate_mat["WT", "b"] <- 0.4957018
+    exp_rate_mat["WT", "c"] <- 0.1678868
+    
+    exp_rate_mat["a", "a, c"] <- 0.3364114
+    exp_rate_mat["a", "a, b"] <- 1.949553e-11
+    exp_rate_mat["b", "b, c"] <- 0.49570178
+    exp_rate_mat["b", "a, b"] <- 4.543890e-10
+    exp_rate_mat["c", "a, c"] <- 0.1504480
+    exp_rate_mat["c", "b, c"] <- 0.01743878
+    
+    exp_rate_mat["a, b", "a, b, c"] <- 4.738846e-10
+    exp_rate_mat["a, c", "a, b, c"] <- 4.868594e-01
+    exp_rate_mat["b, c", "a, b, c"] <- 5.131406e-01
+
+    expect_equal(as.matrix(t_rate_mat), exp_rate_mat, tolerance = 1e-6)
+
+    expect_equal(dim(t_rate_mat), c(8, 8))
+})
+
 test_that("Check initialstates argument on hyper_hmm_opts function",{
     #Matriz de estados iniciales
     initial_states_dataf<-data.frame(a = c(0,0,0,0,0,0,0,0,0,0),
