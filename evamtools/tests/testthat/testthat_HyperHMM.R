@@ -15,15 +15,15 @@ test_that("Transforming for binary to integer",{
     decoded_states <- vapply(all_ids, translate_state,
                             character(1),
                             genes = feature_labels)
-    expect_equal(translate_state(0,genes=feature_labels),"WT")
-    expect_equal(translate_state(1,genes=feature_labels),"c")
-    expect_equal(translate_state(2,genes=feature_labels),"b")
-    expect_equal(translate_state(3,genes=feature_labels),"b, c")
-    expect_equal(translate_state(4,genes=feature_labels),"a")
-    expect_equal(translate_state(5,genes=feature_labels),"a, c")
-    expect_equal(translate_state(6,genes=feature_labels),"a, b")
-    expect_equal(translate_state(7,genes=feature_labels),"a, b, c")
-    expect_equal(translate_state(8,genes=feature_labels),"")
+    expect_equal(evamtools:::translate_state(0,genes=feature_labels),"WT")
+    expect_equal(evamtools:::translate_state(1,genes=feature_labels),"c")
+    expect_equal(evamtools:::translate_state(2,genes=feature_labels),"b")
+    expect_equal(evamtools:::translate_state(3,genes=feature_labels),"b, c")
+    expect_equal(evamtools::translate_state(4,genes=feature_labels),"a")
+    expect_equal(evamtools:::translate_state(5,genes=feature_labels),"a, c")
+    expect_equal(evamtools:::translate_state(6,genes=feature_labels),"a, b")
+    expect_equal(evamtools:::translate_state(7,genes=feature_labels),"a, b, c")
+    expect_equal(evamtools:::translate_state(8,genes=feature_labels),"")
     }
 )
 
