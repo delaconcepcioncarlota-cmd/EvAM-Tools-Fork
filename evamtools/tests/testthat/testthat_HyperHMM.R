@@ -172,3 +172,19 @@ test_that("Check initialstates argument on hyper_hmm_opts function",{
     #Test para comprobar que genera una matriz de transición correctamente
     expect_s4_class(t_mat2, "dgCMatrix")
 })
+
+test_that("HyperHMM plotting basic execution", {
+    set.seed(123)
+
+    dataf <- data.frame(
+    a = sample(c(0, 1), 10, replace = TRUE),
+    b = sample(c(0, 1), 10, replace = TRUE),
+    c = sample(c(0,1 ), 10, replace = TRUE)
+    )
+    r <- evam(as.matrix(dataf), methods = "HyperHMM")
+    
+    # Verificación de objetos gráficos
+    expect_s3_class(plot_HyperHMM_bubbles(r$HyperHMM_primary_output), "ggplot")
+    expect_s3_class(plot_HyperHMM_hypercube(r$HyperHMM_primary_output), "ggplot")
+    expect_silent(suppressMessages(plot_HyperHMM_pfg(r$HyperHMM_primary_output, pfg.layout = "matrix")))
+})
