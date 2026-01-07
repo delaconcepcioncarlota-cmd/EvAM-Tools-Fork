@@ -1069,6 +1069,22 @@ plot_HyperTraPS_evam_influencegraph <- function(cpm_output, label.size = 4) {
 
 #FUNCIONES PARA PLOTEAR HYPERHMM
 
+## cpm output with HyperHMM output -> transition matrix plot
+plot_HyperHMM_as_evam_trans_mat <- function(cpm_output,
+                                      label_type = "genotype",
+                                              fixed_vertex_size = FALSE,
+                                              top_paths = NULL) {
+  d1 <- process_data(cpm_output, mod = "HyperHMM",
+                     plot_type = "trans_mat")
+  plot_genot_fg(d1$data2plot, plot_type = "trans_mat",
+                label_type = label_type,
+                top_paths = top_paths,
+                fixed_vertex_size = fixed_vertex_size,
+                observations = cpm_output$original_data
+                )
+}
+
+
 #Código para generar plots extraído de:
 # plot_HyperHMM_bubbles ->  hyperhmm::plot_bubbles
 # plot_HyperHMM_pfg ->  hyperhmm::plot_pfg
