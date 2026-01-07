@@ -724,18 +724,16 @@ plot_evam <- function(cpm_output, samples = NULL, orientation = "horizontal",
     if (!is.null(methods)) {
         available_methods <- unique(methods[
             vapply(methods, function(method) {
-                attr_name <- ifelse(method == "MHN", "theta", 
-                            ifelse(method == "HyperHMM", "trans_mat", "model"))
+                attr_name <- ifelse(method == "MHN", "theta", "model")
                 return(any(!is.na(cpm_output[[sprintf("%s_%s",
                                                       method, attr_name)]])))
             }, logical(1))
         ])
     } else {
-        allms <- c("OT", "OncoBN", "CBN", "MCCBN", "HESBCN", "MHN","HyperHMM")
+        allms <- c("OT", "OncoBN", "CBN", "MCCBN", "HESBCN", "MHN")
         available_methods <- unique(allms[
             vapply(allms, function(method) {
-                attr_name <- ifelse(method == "MHN", "theta", 
-                            ifelse(method == "HyperHMM", "trans_mat", "model"))
+                attr_name <- ifelse(method == "MHN", "theta", "model")
                 return(any(!is.na(cpm_output[[sprintf("%s_%s",
                                                       method, attr_name)]])))
             }, logical(1))
@@ -753,10 +751,8 @@ plot_evam <- function(cpm_output, samples = NULL, orientation = "horizontal",
                 "did not have analysis output or was not ",
                 "a valid method.")
     }
-    if ("HyperHMM" %in% available_methods){
-        n_rows <- 1
-    } else {
-    n_rows <- 2 }
+
+    n_rows <- 2
     if (orientation == "vertical") {
         op1 <- par(mfrow = c(l_methods, n_rows),
                    mar = c(0.5, 1, 0.5, 0.5),
