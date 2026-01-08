@@ -6,6 +6,13 @@
 \alias{plot_HyperTraPS_evam_summary}
 \alias{plot_HyperTraPS_evam_influences}
 \alias{plot_HyperTraPS_evam_influencegraph}
+\alias{plot_HyperHMM_bubbles}
+\alias{plot_HyperHMM_hypercube}
+\alias{plot_HyperHMM_hypercube_flux}
+\alias{plot_HyperHMM_pfg}
+\alias{plot_hyperHMM_standard}
+\alias{plot_HyperHMM_as_evam_trans_mat}
+\alias{plot_HyperHMM_sample_genots}
 \title{Plot results from EvAMs (CPMs)}
 \description{Plots fitted EvAMs (CPMs), both fitted model and custom
   plots for transition rates and transition probabilities.}
@@ -57,6 +64,49 @@ plot_HyperTraPS_evam_influences(cpm_output,
 upper.right = TRUE, size = 12)
 
 plot_HyperTraPS_evam_influencegraph(cpm_output, label.size = 4)
+
+plot_HyperHMM_bubbles(fitted.obj, 
+                      labels = NULL, 
+                      formatted = FALSE
+)
+plot_HyperHMM_hypercube(fitted.obj,
+                        use.width = TRUE,
+                        duplicate.offset = 0,
+                        lab.size = 3,
+                        p.size = 1,
+                        node.labels = TRUE,
+                        seg.labels = TRUE,
+                        threshold = 0,
+                        break.redundancy = 0,
+                        rotate.phi = FALSE
+)
+
+plot_HyperHMM_hypercube_flux(fitted.obj,
+                            thresh = 0.05,
+                            node.labels = TRUE
+                            use.probability = FALSE
+)
+
+plot_HyperHMM_pfg(fitted.obj, 
+                  pfg.layout = "matrix", 
+                  curvature = 1
+)
+
+plot_hyperHMM_standard(fitted.obj, 
+                      legacy = FALSE, 
+                      label = ""
+)
+
+plot_HyperHMM_as_evam_trans_mat(cpm_output,
+                                  label_type = "genotype",
+                                  fixed_vertex_size = FALSE,
+                                  top_paths = NULL
+)
+
+plot_HyperHMM_sample_genots(cpm_output)
+
+}
+
 }
 \arguments{
   \item{cpm_output}{Output from the cpm}
@@ -118,6 +168,45 @@ mutations), using NULL can lead to a very long time to plot.}
 
 \item{size}{Font size.}
 
+\item{fitted.obj}{The output object directly returned by the \code{HyperHMM} function.
+    It must contain the transition data frame (transitions) and the number of features (L).}
+
+\item{labels}{(vector of characters) optional set of labels for features in plot}
+
+\item{formatted}{(Boolean, default FALSE) redundant, unused}
+
+\item{use.width}{(Boolean, default TRUE) use line width to display edge weights?}
+
+\item{duplicate.offset}{(double, default 0) vertical offset for nodes in identical positions}
+
+\item{lab.size}{(double, default 3) size for edge labels}
+
+\item{p.size}{(double, default 1) point size}
+
+\item{node.labels}{(Boolean, default TRUE) node labels, yes or no?}
+
+\item{seg.labels}{(Boolean, default TRUE) line segment labels, yes or no?}
+
+\item{threshold}{(double, default 0) ignore edges under a threshold in the hypercube plot}
+
+\item{break.redundancy}{redundant, unused}
+
+\item{rotate.phi}{(Boolean, default FALSE) rotate states out of the page (in case of trajectories bunched up near the top/bottom)}
+
+\item{thresh}{A numeric velue (0.05 as default). Transitions with a Flux or Probability 
+    below this threshold will be filtered out to simplify the visualization.}
+
+\item{use.probability}{Boolean. default FALSE. It use probability instead of flux or not.}
+
+\item{pfg.layout}{Character string specifying the graph layout algorithm:
+\itemize{
+  \item \code{"matrix"}: (Default) Arranges nodes ina grid-like structure.
+  \item \code{"tree"}: Attemps to arrange the features in a hierarchical tree-like structure.
+  \item \code{"other"}: Uses a standard force-directed layout that prioritizes equal edge length.}}
+
+\item{curvature}{(double, default 1) curvature of edges}
+
+\item{legacy}{redundant, unused}
 
 }
 
@@ -135,7 +224,6 @@ the predictions of each method; if a node (genotype) has no observations,
 its size is of fixed size. Thus, for all plots except \code{plot_type = 'obs_genotype_transitions'} the size of the genotype nodes is
 the same among methods, but the size of the genotype nodes can differ
 between methods for \code{plot_type = 'obs_genotype_transitions'}.
-
 
 In the top plots, in the DAGs, when a node has two or more incoming
 edges, color depends on the type of relationship. (With a single
@@ -196,6 +284,10 @@ etc. See an example below.
 
 \strong{plot_CPMs has been deprecated}. Use plot_evam.
 
+What about HyperHMM?
+All the plots has been adapted from the HyperHMM package, available at \url{https://github.com/StochasticBiology/hypercube-hmm.git}, 
+except {plot_HyperHMM_as_evam_trans_mat} and {plot_HyperHMM_sample_genots}
+
 }
 
 \references{
@@ -205,7 +297,9 @@ etc. See an example below.
   39–51–10. \url{http://dx.doi.org/10.1016/j.cels.2019.10.009}
 
   Misra, N., Szczurek, E., & Vingron, M. (2014). Inferring the paths of somatic evolution in cancer. Bioinformatics (Oxford, England), 30(17), 2456–2463. \url{https://doi.org/10.1093/bioinformatics/btu319}
-
+  
+  Moen, M. T., & Johnston, I. G. (2022). Efficient inference of evolutionary and progressive dynamics 
+  on hypercubic transition graphs. bioRxiv, 2022.05.09.491130. \url{https://doi.org/10.1101/2022.05.09.491130}
 }
 \examples{
 dB_c1 <- matrix(
@@ -228,7 +322,7 @@ colnames(dB_c1) <- LETTERS[1:5]
 
 ## Use MCCBN only if installed
 MCCBN_INSTALLED <- requireNamespace("mccbn", quietly = TRUE)
-methods <- c("CBN", "OT", "OncoBN", "MHN", "HESBCN")
+methods <- c("CBN", "OT", "OncoBN", "MHN", "HESBCN", "HyperHMM")
 if (MCCBN_INSTALLED) {
     methods <- c(methods, "MCCBN")
 }
@@ -332,5 +426,27 @@ plot_BML_all(out_B1)
 plot_BML_all(out_B_nb)
 plot_BML_all(out_B_OT)
 
+##Examples HyperHMM
 
+plot_HyperHMM_bubbles(out$HyperHMM_primary_output)
+
+plot_HyperHMM_hypercube(out$HyperHMM_primary_output)
+
+plot_HyperHMM_hypercube_flux(out$HyperHMM_primary_output)
+
+plot_HyperHMM_pfg(out$HyperHMM_primary_output)
+
+plot_HyperHMM_standard(out$HyperHMM_primary_output)
+
+##Two more examples: plots based in evam
+out_hm_2 <- evam(dB_c1,
+                methods = c("HyperHMM"),
+                hyper_hmm_opts = list(length = 2,
+                                        model = 2,
+                                        seed = -1))
+plot_HyperHMM_as_evam_trans_mat(out_hm_2, top_paths = 4)
+
+plot_HyperHMM_sample_genots(out)
+
+}
 }
