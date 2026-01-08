@@ -85,7 +85,6 @@ do_HyperHMM <- function(data,
     features=list(N=out$L, names_features=feature_labels)
 
     return(list(
-        edges = edges,
         trans_matrix = trans_mat,
         predicted_freqs = pre_genotype_freqs,
         trans_rate_mat = trans_rate_mat,
