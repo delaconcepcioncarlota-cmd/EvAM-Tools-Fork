@@ -6,13 +6,17 @@
 \alias{plot_HyperTraPS_evam_summary}
 \alias{plot_HyperTraPS_evam_influences}
 \alias{plot_HyperTraPS_evam_influencegraph}
-\alias{plot_HyperHMM_bubbles}
-\alias{plot_HyperHMM_hypercube}
-\alias{plot_HyperHMM_hypercube_flux}
-\alias{plot_HyperHMM_pfg}
-\alias{plot_hyperHMM_standard}
-\alias{plot_HyperHMM_as_evam_trans_mat}
-\alias{plot_HyperHMM_sample_genots}
+% If you wish to redirect the help pages of specific HyperHMM plots to 
+% this documentation, uncomment the following aliases. 
+% They are currently commented out because dedicated help pages 
+% have been created for each specific HyperHMM function.
+% \alias{plot_HyperHMM_bubbles}
+% \alias{plot_HyperHMM_hypercube}
+% \alias{plot_HyperHMM_hypercube_flux}
+% \alias{plot_HyperHMM_pfg}
+% \alias{plot_hyperHMM_standard}
+% \alias{plot_HyperHMM_as_evam_trans_mat}
+% \alias{plot_HyperHMM_sample_genots}
 \title{Plot results from EvAMs (CPMs)}
 \description{Plots fitted EvAMs (CPMs), both fitted model and custom
   plots for transition rates and transition probabilities.}
@@ -65,11 +69,25 @@ upper.right = TRUE, size = 12)
 
 plot_HyperTraPS_evam_influencegraph(cpm_output, label.size = 4)
 
-plot_HyperHMM_bubbles(fitted.obj, 
+plot_HyperHMM_as_evam_trans_mat(cpm_output,
+                                  label_type = "genotype",
+                                  fixed_vertex_size = FALSE,
+                                  top_paths = NULL
+)
+
+plot_HyperHMM_sample_genots(cpm_output)
+
+plot_HyperHMM_bubbles(cpm_output, 
                       labels = NULL, 
                       formatted = FALSE
 )
-plot_HyperHMM_hypercube(fitted.obj,
+
+plot_HyperHMM_pfg(cpm_output, 
+                  pfg.layout = "matrix", 
+                  curvature = 1
+)
+
+plot_HyperHMM_hypercube(cpm_output,
                         use.width = TRUE,
                         duplicate.offset = 0,
                         lab.size = 3,
@@ -81,29 +99,17 @@ plot_HyperHMM_hypercube(fitted.obj,
                         rotate.phi = FALSE
 )
 
-plot_HyperHMM_hypercube_flux(fitted.obj,
+plot_HyperHMM_hypercube_flux(cpm_output,
                             thresh = 0.05,
                             node.labels = TRUE
                             use.probability = FALSE
 )
 
-plot_HyperHMM_pfg(fitted.obj, 
-                  pfg.layout = "matrix", 
-                  curvature = 1
-)
 
-plot_hyperHMM_standard(fitted.obj, 
+plot_hyperHMM_standard(cpm_output, 
                       legacy = FALSE, 
                       label = ""
 )
-
-plot_HyperHMM_as_evam_trans_mat(cpm_output,
-                                  label_type = "genotype",
-                                  fixed_vertex_size = FALSE,
-                                  top_paths = NULL
-)
-
-plot_HyperHMM_sample_genots(cpm_output)
 
 }
 
@@ -428,17 +434,7 @@ plot_BML_all(out_B_OT)
 
 ##Examples HyperHMM
 
-plot_HyperHMM_bubbles(out$HyperHMM_primary_output)
-
-plot_HyperHMM_hypercube(out$HyperHMM_primary_output)
-
-plot_HyperHMM_hypercube_flux(out$HyperHMM_primary_output)
-
-plot_HyperHMM_pfg(out$HyperHMM_primary_output)
-
-plot_HyperHMM_standard(out$HyperHMM_primary_output)
-
-##Two more examples: plots based in evam
+##Plots based in evam
 out_hm_2 <- evam(dB_c1,
                 methods = c("HyperHMM"),
                 hyper_hmm_opts = list(length = 2,
@@ -447,6 +443,18 @@ out_hm_2 <- evam(dB_c1,
 plot_HyperHMM_as_evam_trans_mat(out_hm_2, top_paths = 4)
 
 plot_HyperHMM_sample_genots(out)
+
+##Plots from hyperhmm:
+
+plot_HyperHMM_bubbles(out)
+
+plot_HyperHMM_hypercube(out)
+
+plot_HyperHMM_hypercube_flux(out)
+
+plot_HyperHMM_pfg(out)
+
+plot_HyperHMM_standard(out)
 
 }
 

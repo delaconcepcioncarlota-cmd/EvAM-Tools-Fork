@@ -1,5 +1,5 @@
-\name{plot_hyperHMM_standard}
-\alias{plot_hyperHMM_standard}
+\name{plot_HyperHMM_standard}
+\alias{plot_HyperHMM_standard}
 \title{Panel plot for model output}
 \description{
     This function has been adapted from the HyperHMM package, available at \url{https://github.com/StochasticBiology/hypercube-hmm.git}.
@@ -7,11 +7,11 @@
 }
 
 \usage{
-plot_hyperHMM_standard(fitted.obj, legacy = FALSE, label = "")
+plot_HyperHMM_standard(cpm_output, legacy = FALSE, label = "")
 }
 
 \arguments{
-\item{fitted.obj}{The output object directly returned by the \code{HyperHMM} function.}
+\item{cpm_output}{Output from the cpm. Only the \code{stats} component of \code{HyperHMM_primary_output} is used.}
 
 \item{legacy}{redundant, unused}
 
@@ -23,8 +23,8 @@ A ggplot output
 
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
-fitted = evam(m, methods = "HyperHMM")
-plot_HyperHMM_standard(fitted$HyperHMM_primary_output)
+out = evam(m, methods = "HyperHMM")
+plot_HyperHMM_standard(out)
 }
 
 \references{

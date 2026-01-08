@@ -8,11 +8,11 @@ This function has been adapted from the HyperHMM package, available at \url{http
 }
 
 \usage{
-plot_HyperHMM_pfg(fitted.obj, pfg.layout = "matrix", curvature = 1)
+plot_HyperHMM_pfg(cpm_output, pfg.layout = "matrix", curvature = 1)
 }
 \arguments{
-\item{fitted.obj}{The output object directly returned by the \code{HyperHMM} function.
-    It must contain the transition data frame (transitions) and the number of features (L).}
+\item{cpm_output}{Output from the cpm. Only the \code{viz} component of \code{HyperHMM_primary_output} is used:
+                 \code{cpm_output$HyperHMM_primary_output$viz}.}
 
 \item{pfg.layout}{Character string specifying the graph layout algorithm:
 \itemize{

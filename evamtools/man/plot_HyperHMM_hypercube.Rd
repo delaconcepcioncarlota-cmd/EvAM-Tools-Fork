@@ -8,7 +8,7 @@ redundant? older less flexible version -- will be sparsely commented
 }
 \usage{
 plot_HyperHMM_hypercube(
-  fitted.obj,
+  cpm_output,
   use.width = TRUE,
   duplicate.offset = 0,
   lab.size = 3,
@@ -21,7 +21,8 @@ plot_HyperHMM_hypercube(
 )
 }
 \arguments{
-\item{fitted.obj}{The output object directly returned by the \code{HyperHMM} function.}
+\item{cpm_output}{Output from the cpm. Only the \code{viz} component of \code{HyperHMM_primary_output} is used:
+                 \code{cpm_output$HyperHMM_primary_output$viz}.}
 
 \item{use.width}{(Boolean, default TRUE) use line width to display edge weights?}
 
@@ -47,8 +48,8 @@ plot_HyperHMM_hypercube(
 
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
-fitted = evam(m, methods = "HyperHMM")
-plot_HyperHMM_hypercube(fitted$HyperHMM_primary_output)
+out = evam(m, methods = "HyperHMM")
+plot_HyperHMM_hypercube(out)
 }
 
 \references{

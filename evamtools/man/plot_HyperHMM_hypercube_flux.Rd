@@ -9,7 +9,7 @@
 
 \usage{
     plot_HyperHMM_hypercube_flux(
-        fitted.obj,
+        cpm_output,
         thresh = 0.05,
         node.labels = TRUE
         use.probability = FALSE
@@ -17,8 +17,8 @@
 }
 
 \arguments{
-    \item{fitted.obj}{The output object directly returned by the \code{HyperHMM} function.
-    It must contain the transition data frame (transitions) and the number of features (L).}
+    \item{cpm_output}{Output from the cpm. Components \code{L} and \code{transitions} of \code{HyperHMM_primary_output} are used:
+    \code{cpm_output$HyperHMM_primary_output$L} and \code{cpm_output$HyperHMM_primary_output$transitions}.}
 
     \item{thresh}{A numeric velue (0.05 as default). Transitions with a Flux or Probability 
     below this threshold will be filtered out to simplify the visualization.}
@@ -33,8 +33,8 @@
 }
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
-fitted = evam(m, methods = "HyperHMM")
-plot_HyperHMM_hypercube_flux(fitted$HyperHMM_primary_output)
+out = evam(m, methods = "HyperHMM")
+plot_HyperHMM_hypercube_flux(out)
 }
 
 \references{

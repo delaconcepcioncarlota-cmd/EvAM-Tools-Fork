@@ -1095,12 +1095,14 @@ plot_HyperHMM_sample_genots <- function(cpm_output){
 # plot_HyperHMM_hypercube_flux ->  hyperhmm::plot_hypercube_flux
 
 #BUBBLE PLOT
-plot_HyperHMM_bubbles <- function(fitted.obj, # output data structure. either just a matrix of probabilities (formatted == F) or a dataframe output from the HyperHMM wrapper with means and sds (formatted == T)
+plot_HyperHMM_bubbles <- function(cpm_output, #output of evam. It is only used the output of HyperHMM($HyperHMM_primary_output)
+                        # output data structure. either just a matrix of probabilities (formatted == F) 
+                        # or a dataframe output from the HyperHMM wrapper with means and sds (formatted == T)
                                     labels = NULL, # labels for feature names
                                     formatted = FALSE) # dataframe formatted or not? see above
 {  
     message("Building bubble plot")
-
+  fitted.obj = cpm_output$HyperHMM_primary_output  
   bp = fitted.obj$stats
   # if we've just got a matrix of probabilities, pull it into long form
   if(formatted == FALSE) {
@@ -1128,11 +1130,12 @@ plot_HyperHMM_bubbles <- function(fitted.obj, # output data structure. either ju
 }
 
 #-----------PFG PLOT
-plot_HyperHMM_pfg <- function(fitted.obj,  # list of transitions between states
+plot_HyperHMM_pfg <- function(cpm_output,  # result of evam. It is only used the output of HyperHMM ($HyperHMM_primary_output)
+                    #($HyperHMM_primary_output$viz) -> list of transitions between states
                     pfg.layout = "matrix",  # graph layout
                     curvature = 1)   # geometric parameter for edge curviness
 {
-
+  fitted.obj = cpm_output$HyperHMM_primary_output 
   translist = fitted.obj$viz
   message("Building PFG")
   ## PFG
@@ -1210,7 +1213,8 @@ plot_HyperHMM_pfg <- function(fitted.obj,  # list of transitions between states
 }
 
 #HYPERCUBE PLOT
-plot_HyperHMM_hypercube <- function(fitted.obj,               # including set of transitions
+plot_HyperHMM_hypercube <- function(cpm_output,               # Result of evam. It is only used the output of HyperHMM ($HyperHMM_primary_output)
+                           #($HyperHMM_primary_output$viz) including set of transitions
                            use.width = TRUE,           # use line width to display edge weights?
                            duplicate.offset = 0.,   # vertical offset for nodes in identical positions
                            lab.size = 3,            # size for edge labels
@@ -1221,6 +1225,7 @@ plot_HyperHMM_hypercube <- function(fitted.obj,               # including set of
                            break.redundancy = 0,    # itself redundant now?
                            rotate.phi = FALSE)          # rotate states out of the page (in case of trajectories bunched up near the top/bottom)
 {
+  fitted.obj = cpm_output$HyperHMM_primary_output
   translist = fitted.obj$viz
   message("Building hypercube plot")
 
@@ -1346,20 +1351,6 @@ plot_HyperHMM_hypercube <- function(fitted.obj,               # including set of
   return(cube.plot)
 }
 
-#STANDARD PLOT
-plot_HyperHMM_standard <- function(fitted.obj, 
-                                    legacy=FALSE, 
-                                    label="")
-{
-    plot_bubs = plot_HyperHMM_bubbles(fitted.obj, formatted=TRUE) + ggplot2::ggtitle(label)
-    plot_flux = plot_HyperHMM_hypercube_flux(fitted.obj, thresh = 0.02) +
-        ggplot2::theme(legend.position = "none")
-    plot_diag = plot_HyperHMM_pfg(fitted.obj, pfg.layout="matrix")
-    plot_standard = ggpubr::ggarrange(plot_flux, plot_bubs, plot_diag, nrow=1)
-
-  return(plot_standard)
-}
-
 #-----HYPERCUBE FLUX PLOT
 #Función necesaria para el plot: hypercube flux
 DecToBin <- function(x, len) {
@@ -1371,11 +1362,12 @@ DecToBin <- function(x, len) {
   return(paste(s, collapse=""))
 }
 
-plot_HyperHMM_hypercube_flux <- function(fitted.obj, 
+plot_HyperHMM_hypercube_flux <- function(cpm_output,  # Result of evam. It is only used the output of HyperHMM ($HyperHMM_primary_output) 
                                         thresh = 0.05, 
                                         node.labels = TRUE, 
                                         use.probability = FALSE)
 {
+    fitted.obj = cpm_output$HyperHMM_primary_output
     my.post = fitted.obj
   ### produce hypercube subgraph
   bigL = my.post$L
@@ -1405,4 +1397,19 @@ plot_HyperHMM_hypercube_flux <- function(fitted.obj,
     this.plot = this.plot + ggraph::geom_node_text(ggplot2::aes(label=binname),angle=45,size=2)
   }
   return(this.plot)
+}
+
+#STANDARD PLOT
+plot_HyperHMM_standard <- function(cpm_output,  # Result of evam. It is only used the output of HyperHMM ($HyperHMM_primary_output)
+                                    legacy=FALSE, 
+                                    label="")
+{
+    fitted.obj = cpm_output$HyperHMM_primary_output
+    plot_bubs = plot_HyperHMM_bubbles(fitted.obj, formatted=TRUE) + ggplot2::ggtitle(label)
+    plot_flux = plot_HyperHMM_hypercube_flux(fitted.obj, thresh = 0.02) +
+        ggplot2::theme(legend.position = "none")
+    plot_diag = plot_HyperHMM_pfg(fitted.obj, pfg.layout="matrix")
+    plot_standard = ggpubr::ggarrange(plot_flux, plot_bubs, plot_diag, nrow=1)
+
+  return(plot_standard)
 }

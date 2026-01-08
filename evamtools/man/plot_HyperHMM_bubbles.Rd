@@ -7,11 +7,11 @@ This function has been adapted from the HyperHMM package, available at \url{http
 }
 
 \usage{
-plot_HyperHMM_bubbles(fitted.obj, labels = NULL, formatted = FALSE)
+plot_HyperHMM_bubbles(cpm_output, labels = NULL, formatted = FALSE)
 }
 \arguments{
-\item{fitted.obj}{The output object directly returned by the \code{HyperHMM} function.
-    It must contain the transition data frame (transitions) and the number of features (L).}
+\item{cpm_output}{Output from the cpm. Only the \code{stats} component of \code{HyperHMM_primary_output} is used:
+                 \code{cpm_output$HyperHMM_primary_output$stats}.}
 
 \item{labels}{(vector of characters) optional set of labels for features in plot}
 
@@ -23,8 +23,8 @@ plot_HyperHMM_bubbles(fitted.obj, labels = NULL, formatted = FALSE)
 
 \examples{
 m = matrix(c(0,0,1,0,1,1), byrow=TRUE, ncol=3)
-fitted = evam(m, methods = "HyperHMM")
-plot_HyperHMM_bubbles(fitted$HyperHMM_primary_output)
+out = evam(m, methods = "HyperHMM")
+plot_HyperHMM_bubbles(out)
 }
 
 \references{
