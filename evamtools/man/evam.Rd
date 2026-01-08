@@ -335,8 +335,6 @@ probability of numbers of mutations observed in the sample. You can
         \code{transitions} (Flux) output of the call to 
         \code{\link[hyperhmm:HyperHMM]{HyperHMM}}.} 
 
-  \item{HyperHMM_edges}{Relationship between states, with components: from (source state), to (target state), probability (transition probability from ‘from’ to ‘to’), relation (type of relation between states), and edges (list of edges representing the connections).} 
-
   \item{HyperHMM_all_paths}{All inferred paths between states for visualization.} 
 
   \item{HyperHMM_predicted_genotype_freqs}{As for OT.} 
