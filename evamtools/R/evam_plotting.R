@@ -17,7 +17,7 @@
 ## #' Use plot matrix to plot the sampled genotypes
 ## #'
 ## #' @param data data.frame object with cross sectional datas
-plot_sampled_genots <- function(data) {
+plot_sampled_genots <- function(data, colour = NULL) {
     d1 <- data_to_counts(data, out = "data.frame", omit_0 = TRUE)
 
     ## ## Reorder by number mutations and names, but WT always first
@@ -40,7 +40,7 @@ plot_sampled_genots <- function(data) {
     op <- par(mar = c(3, 5, 5, 3), las = 1)
     plot(m1, cex = 1.5, digits = 0, key = NULL,
          axis.col = list(side = 3), xlab = "", ylab = "",
-         col = NULL,
+         col = colour,
          main  = "")
     par(op)
 }
@@ -1083,8 +1083,10 @@ plot_HyperHMM_as_evam_trans_mat <- function(cpm_output,
                 observations = cpm_output$original_data
                 )
 }
-
-
+#Plot de los genotipos en la muestra, utilizando la función plot_sampled_genots
+plot_HyperHMM_sample_genots <- function(cpm_output){
+    plot_sampled_genots(cpm_output$analyzed_data, colour= "#C8A2C8")
+}
 #Código para generar plots extraído de:
 # plot_HyperHMM_bubbles ->  hyperhmm::plot_bubbles
 # plot_HyperHMM_pfg ->  hyperhmm::plot_pfg

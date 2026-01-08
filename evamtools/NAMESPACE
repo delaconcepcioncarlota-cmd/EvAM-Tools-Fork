@@ -14,6 +14,8 @@ export(
  , "plot_HyperTraPS_evam_influences"
  , "plot_HyperTraPS_evam_influencegraph"
  , "probs_from_HyperTraPS_discrete"
+ , "plot_HyperHMM_as_evam_trans_mat"
+ , "plot_HyperHMM_sample_genots"
  , "plot_HyperHMM_bubbles"
  , "plot_HyperHMM_pfg"
  , "plot_HyperHMM_hypercube"
