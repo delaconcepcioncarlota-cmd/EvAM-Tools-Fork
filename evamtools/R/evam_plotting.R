@@ -1404,11 +1404,10 @@ plot_HyperHMM_standard <- function(cpm_output,  # Result of evam. It is only use
                                     legacy=FALSE, 
                                     label="")
 {
-    fitted.obj = cpm_output$HyperHMM_primary_output
-    plot_bubs = plot_HyperHMM_bubbles(fitted.obj, formatted=TRUE) + ggplot2::ggtitle(label)
-    plot_flux = plot_HyperHMM_hypercube_flux(fitted.obj, thresh = 0.02) +
+    plot_bubs = plot_HyperHMM_bubbles(cpm_output, formatted=TRUE) + ggplot2::ggtitle(label)
+    plot_flux = plot_HyperHMM_hypercube_flux(cpm_output, thresh = 0.02) +
         ggplot2::theme(legend.position = "none")
-    plot_diag = plot_HyperHMM_pfg(fitted.obj, pfg.layout="matrix")
+    plot_diag = plot_HyperHMM_pfg(cpm_output, pfg.layout="matrix")
     plot_standard = ggpubr::ggarrange(plot_flux, plot_bubs, plot_diag, nrow=1)
 
   return(plot_standard)
