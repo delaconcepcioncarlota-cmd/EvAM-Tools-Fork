@@ -107,7 +107,7 @@ plot_HyperHMM_sample_genots(cpm_output)
 
 }
 
-}
+
 \arguments{
   \item{cpm_output}{Output from the cpm}
 
@@ -449,4 +449,4 @@ plot_HyperHMM_as_evam_trans_mat(out_hm_2, top_paths = 4)
 plot_HyperHMM_sample_genots(out)
 
 }
-}
+

@@ -31,5 +31,5 @@ plot_HyperHMM_sample_genots(model_HyperHMM)
     \bold{evam} 
 
 - Diaz-Uriarte, R & Herrera-Nieto, P. 2022. EvAM-Tools: tools for evolutionary accumulation and cancer 
-progression models. Bioinformatics. url\{https://doi.org/10.1093/bioinformatics/btac710}
+progression models. Bioinformatics. \url{https://doi.org/10.1093/bioinformatics/btac710}
 }

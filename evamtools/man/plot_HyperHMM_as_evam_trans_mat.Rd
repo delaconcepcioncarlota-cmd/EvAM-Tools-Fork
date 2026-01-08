@@ -16,7 +16,7 @@
     \item{label_type}{Type of label to show. One of:
         \describe{
         \item{genotype: }{Displays all genes mutated}
-        \item{acquisition: }{Only displays the last gente mutated}
+        \item{acquisition: }{Only displays the last gente mutated}}
     \item{fixed_vertex_size}{Boolean. If TRUE, all nodes with have the same
         size; otherwise, scale them proportional to frequencies of observed data.}
     \item{top_paths}{Number of most relevant paths to plot. Default NULL
@@ -27,7 +27,7 @@
 
   }
 }
-}
+
 
 \value{
     A igraph object
@@ -63,5 +63,5 @@
     \bold{evam} 
 
 - Diaz-Uriarte, R & Herrera-Nieto, P. 2022. EvAM-Tools: tools for evolutionary accumulation and cancer 
-progression models. Bioinformatics. url\{https://doi.org/10.1093/bioinformatics/btac710}
+progression models. Bioinformatics. \url{https://doi.org/10.1093/bioinformatics/btac710}
 }
