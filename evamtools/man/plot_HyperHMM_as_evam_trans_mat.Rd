@@ -3,7 +3,7 @@
 \title{Plot genotype transition matrix from a HyperHMM model}
 \description{Visualize the evolutionary pathways estimated by aHyperHMM model}
 
-\usage{plot_HyperTraPS_as_evam_trans_mat(
+\usage{plot_HyperHMM_as_evam_trans_mat(
   cpm_output,
   label_type = "genotype",
   fixed_vertex_size = FALSE,
