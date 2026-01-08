@@ -1400,7 +1400,7 @@ plot_HyperHMM_hypercube_flux <- function(cpm_output,  # Result of evam. It is on
 }
 
 #STANDARD PLOT
-plot_HyperHMM_standard <- function(cpm_output,  # Result of evam. It is only used the output of HyperHMM ($HyperHMM_primary_output)
+plot_HyperHMM_standard <- function(cpm_output,  # Result of evam. 
                                     legacy=FALSE, 
                                     label="")
 {

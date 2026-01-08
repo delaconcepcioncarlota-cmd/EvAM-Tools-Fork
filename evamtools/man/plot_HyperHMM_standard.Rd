@@ -11,7 +11,7 @@ plot_HyperHMM_standard(cpm_output, legacy = FALSE, label = "")
 }
 
 \arguments{
-\item{cpm_output}{Output from the cpm. Only the \code{stats} component of \code{HyperHMM_primary_output} is used.}
+\item{cpm_output}{Output from the cpm.}
 
 \item{legacy}{redundant, unused}
 
