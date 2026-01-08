@@ -1099,7 +1099,7 @@ plot_HyperHMM_bubbles <- function(cpm_output, #output of evam. It is only used t
                         # output data structure. either just a matrix of probabilities (formatted == F) 
                         # or a dataframe output from the HyperHMM wrapper with means and sds (formatted == T)
                                     labels = NULL, # labels for feature names
-                                    formatted = FALSE) # dataframe formatted or not? see above
+                                    formatted = TRUE) # dataframe formatted or not? see above
 {  
     message("Building bubble plot")
   fitted.obj = cpm_output$HyperHMM_primary_output  
