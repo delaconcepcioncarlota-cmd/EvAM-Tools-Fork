@@ -2,18 +2,10 @@ t1 <- Sys.time()
 
 #Check of translation from binary to int
 test_that("Transforming for binary to integer",{
-    set.seed(123) # Cualquier número sirve
-    dataf <- data.frame(
-            a = sample(c(0, 1), 10, replace = TRUE),
-            b = sample(c(0, 1), 10, replace = TRUE),
-            c = sample(c(0,1 ), 10, replace = TRUE))
-    datam <- as.matrix(dataf)
-    feature_labels <- colnames(dataf)
-    num_features <- ncol(dataf)
+    # Cambio en el test_that en base al feedback de la presentación
+    feature_labels <- c("a","b","c") #Asignación única a feature_labels de las características
 
-    r <- evam(datam, methods="HyperHMM")
-
-    all_ids <- 0:(2^(num_features)-1)
+    #Comprobación de asignación correcta
     expect_equal(evamtools:::translate_state(0,genes=feature_labels),"WT")
     expect_equal(evamtools:::translate_state(1,genes=feature_labels),"c")
     expect_equal(evamtools:::translate_state(2,genes=feature_labels),"b")
