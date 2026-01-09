@@ -1428,8 +1428,7 @@ plot_HyperHMM_standard <- function(cpm_output,  # Result of evam.
                                     label="")
 {
     plot_bubs = plot_HyperHMM_bubbles(cpm_output, formatted=TRUE) + ggplot2::ggtitle(label)
-    plot_flux = plot_HyperHMM_hypercube_flux(cpm_output, thresh = 0.02) +
-        ggplot2::theme(legend.position = "none")
+    plot_flux = plot_HyperHMM_hypercube_flux(cpm_output, thresh = 0.02)
     plot_diag = plot_HyperHMM_pfg(cpm_output, pfg.layout="matrix")
     plot_standard = ggpubr::ggarrange(plot_flux, plot_bubs, plot_diag, nrow=1)
 
