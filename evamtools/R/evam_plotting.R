@@ -1135,6 +1135,11 @@ plot_HyperHMM_pfg <- function(cpm_output,  # result of evam. It is only used the
                     pfg.layout = "matrix",  # graph layout
                     curvature = 1)   # geometric parameter for edge curviness
 {
+    gene_names <- cpm_output$HyperHMM_n_features$names_features
+    equivalencia <- data.frame(
+        ID = 1:length(gene_names),
+        Caracteristica = gene_names
+  )
   fitted.obj = cpm_output$HyperHMM_primary_output 
   translist = fitted.obj$viz
   message("Building PFG")
@@ -1200,14 +1205,32 @@ plot_HyperHMM_pfg <- function(cpm_output,  # result of evam. It is only used the
       ggraph::geom_node_point(ggplot2::aes(color=name)) +
 # ggraph::geom_node_label(ggplot2::aes(label=name, fill=name))  # fondo de etiqueta según nombre
       ggraph::geom_node_label(ggplot2::aes(label=name, fill=name), nudge_x = 0.05, nudge_y=-0.05) +
-      ggplot2::theme_void() + ggplot2::theme(legend.position = "none")
+      ggplot2::theme_void() + ggplot2::theme(legend.position = "none",
+      plot.caption = ggplot2::element_text(
+      size = 18,               
+      face = "bold",           
+      color = "black",        
+      hjust = 0.5,
+      margin = ggplot2::margin(t = 25)
+    ),
+    plot.margin = ggplot2::margin(10, 10, 40, 10)) + 
+    ggplot2::labs(caption = paste(apply(equivalencia, 1, function(x) paste0(x[1], ": ", x[2])), collapse = "  |  "))
   } else {
     g.3 = ggraph::ggraph(g) +
       ggraph::geom_edge_bend(ggplot2::aes(edge_width=exp(weight/sumw), edge_alpha = weight/sumw),
                              strength=curvature,  arrow=ggplot2::arrow()) +
       ggraph::geom_node_point() +
       ggraph::geom_node_label(ggplot2::aes(label=name), nudge_x = 0.05, nudge_y=-0.05) +
-      ggplot2::theme_void() + ggplot2::theme(legend.position = "none")
+      ggplot2::theme_void() + ggplot2::theme(legend.position = "none",
+      plot.caption = ggplot2::element_text(
+      size = 18,  
+      face = "bold",  
+      color = "black",    
+      hjust = 0.5,  
+      margin = ggplot2::margin(t = 25) 
+    ),
+    plot.margin = ggplot2::margin(10, 10, 40, 10)) +
+    ggplot2::labs(caption = paste(apply(equivalencia, 1, function(x) paste0(x[1], ": ", x[2])), collapse = "  |  "))
   }
   return(g.3)
 }
