@@ -1095,14 +1095,19 @@ plot_HyperHMM_sample_genots <- function(cpm_output){
 # plot_HyperHMM_hypercube_flux ->  hyperhmm::plot_hypercube_flux
 
 #BUBBLE PLOT
-plot_HyperHMM_bubbles <- function(cpm_output, #output of evam. It is only used the output of HyperHMM($HyperHMM_primary_output)
+plot_HyperHMM_bubbles <- function(cpm_output,#output of evam. It is only used the output of HyperHMM($HyperHMM_primary_output)
                         # output data structure. either just a matrix of probabilities (formatted == F) 
                         # or a dataframe output from the HyperHMM wrapper with means and sds (formatted == T)
-                                    labels = NULL, # labels for feature names
+                                    labels = colnames(cpm_output$original_data), # labels for feature names
                                     formatted = TRUE) # dataframe formatted or not? see above
 {  
     message("Building bubble plot")
-  fitted.obj = cpm_output$HyperHMM_primary_output  
+    gene_names <- cpm_output$HyperHMM_n_features$names_features
+    equivalencia <- data.frame(
+        ID = 1:length(gene_names),
+        Caracteristica = gene_names
+  )
+    fitted.obj = cpm_output$HyperHMM_primary_output
   bp = fitted.obj$stats
   # if we've just got a matrix of probabilities, pull it into long form
   if(formatted == FALSE) {
@@ -1122,12 +1127,14 @@ plot_HyperHMM_bubbles <- function(cpm_output, #output of evam. It is only used t
       ggplot2::theme_classic() + ggplot2::theme(legend.position = "none")
   } else {
     g.1 = ggplot2::ggplot(bp.df, ggplot2::aes(x=order, y=feature)) +
-      ggplot2::geom_point(ggplot2::aes(size=prob), colour="#000000ff") +
+      ggplot2::geom_point(ggplot2::aes(size=prob), colour="#31b786ff") +
+      ggplot2::scale_x_continuous(breaks=1:max(bp.df$order)) +
       ggplot2::scale_y_continuous(breaks=length(labels):1, labels=labels) +
       ggplot2::theme_classic() + ggplot2::theme(legend.position = "none")
   }
   return(g.1)
 }
+
 
 #-----------PFG PLOT
 plot_HyperHMM_pfg <- function(cpm_output,  # result of evam. It is only used the output of HyperHMM ($HyperHMM_primary_output)
@@ -1205,7 +1212,8 @@ plot_HyperHMM_pfg <- function(cpm_output,  # result of evam. It is only used the
       ggraph::geom_node_point(ggplot2::aes(color=name)) +
 # ggraph::geom_node_label(ggplot2::aes(label=name, fill=name))  # fondo de etiqueta según nombre
       ggraph::geom_node_label(ggplot2::aes(label=name, fill=name), nudge_x = 0.05, nudge_y=-0.05) +
-      ggplot2::theme_void() + ggplot2::theme(legend.position = "none",
+      ggplot2::theme_void() + ggplot2::theme(
+        legend.position = "none",
       plot.caption = ggplot2::element_text(
       size = 18,               
       face = "bold",           
@@ -1213,7 +1221,8 @@ plot_HyperHMM_pfg <- function(cpm_output,  # result of evam. It is only used the
       hjust = 0.5,
       margin = ggplot2::margin(t = 25)
     ),
-    plot.margin = ggplot2::margin(10, 10, 40, 10)) + 
+    plot.margin = ggplot2::margin(10, 10, 40, 10)
+    ) + 
     ggplot2::labs(caption = paste(apply(equivalencia, 1, function(x) paste0(x[1], ": ", x[2])), collapse = "  |  "))
   } else {
     g.3 = ggraph::ggraph(g) +
@@ -1221,16 +1230,7 @@ plot_HyperHMM_pfg <- function(cpm_output,  # result of evam. It is only used the
                              strength=curvature,  arrow=ggplot2::arrow()) +
       ggraph::geom_node_point() +
       ggraph::geom_node_label(ggplot2::aes(label=name), nudge_x = 0.05, nudge_y=-0.05) +
-      ggplot2::theme_void() + ggplot2::theme(legend.position = "none",
-      plot.caption = ggplot2::element_text(
-      size = 18,  
-      face = "bold",  
-      color = "black",    
-      hjust = 0.5,  
-      margin = ggplot2::margin(t = 25) 
-    ),
-    plot.margin = ggplot2::margin(10, 10, 40, 10)) +
-    ggplot2::labs(caption = paste(apply(equivalencia, 1, function(x) paste0(x[1], ": ", x[2])), collapse = "  |  "))
+      ggplot2::theme_void() + ggplot2::theme(legend.position = "none")
   }
   return(g.3)
 }
