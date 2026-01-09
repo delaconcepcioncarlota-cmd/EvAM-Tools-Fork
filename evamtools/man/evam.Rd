@@ -339,8 +339,6 @@ probability of numbers of mutations observed in the sample. You can
 
   \item{HyperHMM_predicted_genotype_freqs}{As for OT.} 
 
-  \item{HyperHMM_flux_genotype_freqs}{Flux of genotypes from the HyperHMM model, as a data frame.} 
-
   \item{HyperHMM_n_features}{Number of features (\code{$N}) and their names (\code{$names_features}).} 
   \item{HyperHMM_stats}{Feature-level statistics including feature ID (\code{$features}), order (\code{$order}), mean (\code{$mean}), and standard deviation (\code{$sd}).} 
 
