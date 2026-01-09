@@ -223,9 +223,9 @@ test_that("HyperHMM plotting basic execution", {
     r <- evam(as.matrix(dataf), methods = "HyperHMM")
     
     # Verificación de objetos gráficos
-    expect_s3_class(plot_HyperHMM_bubbles(r$HyperHMM_primary_output), "ggplot")
-    expect_s3_class(plot_HyperHMM_hypercube(r$HyperHMM_primary_output), "ggplot")
-    expect_silent(suppressMessages(plot_HyperHMM_pfg(r$HyperHMM_primary_output, pfg.layout = "matrix")))
+    expect_s3_class(plot_HyperHMM_bubbles(r), "ggplot")
+    expect_s3_class(plot_HyperHMM_hypercube(r), "ggplot")
+    expect_silent(suppressMessages(plot_HyperHMM_pfg(r, pfg.layout = "matrix")))
 })
 
 test_that("HyperHMM plotting functions handle different thresholds", {
@@ -238,9 +238,9 @@ test_that("HyperHMM plotting functions handle different thresholds", {
     
     r <- evam(dataf, methods = "HyperHMM")
 
-    expect_no_error(plot_HyperHMM_hypercube(r$HyperHMM_primary_output, threshold = 0.99))
+    expect_no_error(plot_HyperHMM_hypercube(r, threshold = 0.99))
 
-    p_flux <- plot_HyperHMM_hypercube_flux(r$HyperHMM_primary_output, thresh = 0.01)
+    p_flux <- plot_HyperHMM_hypercube_flux(r, thresh = 0.01)
     expect_s3_class(p_flux, "ggplot")
 })
 
