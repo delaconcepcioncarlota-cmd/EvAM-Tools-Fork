@@ -489,7 +489,6 @@ cpm2tm <- function(x,
     if(exists("parent_set", x) && !(exists("Relation", x$edges)))
         stop("x has parent_set but no Relation. Old format?")
 
-    ##-->>> Hay que revisar que tipo de relación lógica tiene HyperHMM
     ## OT, CBN, and OncoBN if using CBN, HESBCN only Single and AND
     if (!exists("Relation", x$edges) ||
        isTRUE(all(x$edges$Relation %in% c("AND", "Single")))) {
