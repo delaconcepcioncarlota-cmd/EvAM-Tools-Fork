@@ -370,13 +370,6 @@ run_HyperHMM <- function (x, opts){
     })["elapsed"]
     return(list(time_out = time_out, out = out_final))
 }
-##Hay por ahí una funcion que tienen todas las anteriores que se llama do_modelo}
-
-##system.time({...})["elapsed"] para medir cuánto tiempo tarda la ejecución en segundos.
-##Casi todas intentan convertir la salida nativa del algoritmo a un formato común, específicamente llamando a funciones como cpm2tm() o probs_from_trm()
-##Return:¡(list(time_out=time_out, out=parametros de salida))
-##Vale, la gema me ha dicho que hay que crear una funcion, buscar si hyperhmm ya la tiene, que pase los datos de $transitions a una matriz de transicion, 
-##en esa variable estan el from(filas) el to(cols) y la probabilidad de from a to.
 
 run_method <- function(method, x, opts) {
     if (method == "MHN") {

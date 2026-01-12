@@ -13,11 +13,6 @@
 ## You should have received a copy of the GNU Affero General Public License along
 ## with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-##COSAS PENDIENTES
-### Parámetros HyperHMM_opts linea 121 o asi
-### Supongo que tambien esto: Dealing with the multiple spellings of HyperTraPS (HyperHMM)
-
-
 
 common_preprocess <- function(x, max_cols) {
     ## ########      Preprocessing: common to all methods
